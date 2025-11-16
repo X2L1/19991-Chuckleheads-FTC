@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
@@ -22,7 +23,7 @@ public class OuttakeSubsystem {
     private Servo angleServoLeft;
     private Servo angleServoRight;
 
-    private GoBildaPinpoint pinpoint; // Odometry device
+    private GoBildaPinpointDriver pinpoint; // Odometry device
 
     private TreeMap<Double, ShotParams> shotMap = new TreeMap<>();
 

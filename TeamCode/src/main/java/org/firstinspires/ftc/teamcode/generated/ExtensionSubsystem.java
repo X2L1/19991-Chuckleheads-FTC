@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.ContinuousRotationServo;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 public class ExtensionSubsystem {
 
-    private ContinuousRotationServo extensionServo1;
-    private ContinuousRotationServo extensionServo2;
+    private CRServo extensionServo1;
+    private CRServo extensionServo2;
 
     // Constructor to initialize hardware
     public ExtensionSubsystem(HydraHardware hardware) {
