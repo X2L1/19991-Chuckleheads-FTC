@@ -82,6 +82,13 @@ public class HydraTeleOp extends OpMode {
         // Indexer kicks
         if (gamepad2.dpad_down) {
             indexerSubsystem.kickAll();
+            try{
+                Thread.sleep(200);
+            }
+            catch (InterruptedException e){
+                //do nothing
+            }
+            indexerSubsystem.resetAll();
         } else if (gamepad2.dpad_left) {
             indexerSubsystem.kickPurple();
         } else if (gamepad2.dpad_right) {
