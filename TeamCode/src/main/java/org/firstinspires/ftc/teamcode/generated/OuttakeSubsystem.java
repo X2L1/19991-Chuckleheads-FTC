@@ -2,11 +2,8 @@ package org.firstinspires.ftc.teamcode.generated;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
@@ -16,12 +13,12 @@ import java.util.TreeMap;
 
 public class OuttakeSubsystem {
 
-    private DcMotorEx shooterMotorLeft;
-    private DcMotorEx shooterMotorCenter;
-    private DcMotorEx shooterMotorRight;
+    private DcMotorEx outtakeLeft;
+    private DcMotorEx outtakeCenter;
+    private DcMotorEx outtakeRight;
 
-    private Servo angleServoLeft;
-    private Servo angleServoRight;
+    private Servo outerHood;
+    //private Servo angleServoRight;
 
     private GoBildaPinpointDriver pinpoint; // Odometry device
 
@@ -44,12 +41,12 @@ public class OuttakeSubsystem {
 
     // Constructor
     public OuttakeSubsystem(HydraHardware hardware) {
-        this.shooterMotorLeft = hardware.shooterMotorLeft;
-        this.shooterMotorCenter = hardware.shooterMotorCenter;
-        this.shooterMotorRight = hardware.shooterMotorRight;
+        this.outtakeLeft = hardware.outtakeLeft;
+        this.outtakeCenter = hardware.outtakeCenter;
+        this.outtakeRight = hardware.outtakeRight;
 
-        this.angleServoLeft = hardware.angleServoLeft;
-        this.angleServoRight = hardware.angleServoRight;
+        this.outerHood = hardware.outerHood;
+        //this.angleServoRight = hardware.angleServoRight;
 
         this.pinpoint = hardware.pinpoint;
 
@@ -99,15 +96,15 @@ public class OuttakeSubsystem {
 
     // Set shooter velocity
     public void setVelocity(double velocity) {
-        shooterMotorLeft.setVelocity(velocity);
-        shooterMotorCenter.setVelocity(velocity);
-        shooterMotorRight.setVelocity(velocity); // Assumes positive velocity works with reversed direction
+        outtakeLeft.setVelocity(velocity);
+        outtakeCenter.setVelocity(velocity);
+        outtakeRight.setVelocity(velocity); // Assumes positive velocity works with reversed direction
     }
 
     // Set shooter angle (assuming both servos move together; adjust if one needs inversion)
     public void setAngle(double angle) {
-        angleServoLeft.setPosition(angle);
-        angleServoRight.setPosition(angle);
+        outerHood.setPosition(angle);
+        //angleServoRight.setPosition(angle);
     }
 
     // Stop the shooter

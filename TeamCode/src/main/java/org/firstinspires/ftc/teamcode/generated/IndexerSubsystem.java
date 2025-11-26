@@ -19,21 +19,21 @@ public class IndexerSubsystem {
     // Constructor to initialize hardware
     public IndexerSubsystem(HydraHardware hardware) {
         chamberServos = new Servo[]{
-                hardware.chamberServo1,
-                hardware.chamberServo2,
-                hardware.chamberServo3
+                hardware.leftChamber,
+                hardware.centerChamber,
+                hardware.rightChamber
         };
 
         colorSensors = new ColorSensor[]{
-                hardware.colorSensor1,
-                hardware.colorSensor2,
-                hardware.colorSensor3
+                hardware.leftColorSensor,
+                hardware.centerColorSensor,
+                hardware.rightColorSensor
         };
 
         rgbLights = new Servo[]{
-                hardware.rgbLight1,
-                hardware.rgbLight2,
-                hardware.rgbLight3
+                hardware.leftRGB,
+                hardware.centerRGB,
+                hardware.rightRGB
         };
     }
 
@@ -89,7 +89,8 @@ public class IndexerSubsystem {
     // Assume 1.0 is the kick/up position; adjust as needed
     private void kickChamber(int chamberIndex) {
         if (chamberIndex >= 0 && chamberIndex < 3) {
-            chamberServos[chamberIndex].setPosition(1.0);
+            chamberServos[chamberIndex].setPosition(.55);
+
         }
     }
 
@@ -98,7 +99,7 @@ public class IndexerSubsystem {
     // Call this after a delay or when kick is complete
     public void resetChamber(int chamberIndex) {
         if (chamberIndex >= 0 && chamberIndex < 3) {
-            chamberServos[chamberIndex].setPosition(0.0);
+            chamberServos[chamberIndex].setPosition(.8);
         }
     }
 

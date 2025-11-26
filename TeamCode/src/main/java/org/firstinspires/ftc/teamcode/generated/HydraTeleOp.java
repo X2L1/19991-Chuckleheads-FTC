@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.generated;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp(name = "HydraTeleOp", group = "TeleOp")
 public class HydraTeleOp extends OpMode {
@@ -39,8 +37,8 @@ public class HydraTeleOp extends OpMode {
 
         // Drive controls (robot-centric mecanum)
         double forward = -gamepad1.left_stick_y; // Negative for inversion if needed
-        double strafe = gamepad1.left_stick_x;
-        double turn = gamepad1.right_stick_x;
+        double strafe = gamepad1.right_stick_x;
+        double turn = gamepad1.left_stick_x;
 
         
 
@@ -63,42 +61,43 @@ public class HydraTeleOp extends OpMode {
         }
 
         // Set motor powers
-        hardware.frontLeftMotor.setPower(frontLeftPower);
-        hardware.frontRightMotor.setPower(frontRightPower);
-        hardware.backLeftMotor.setPower(backLeftPower);
-        hardware.backRightMotor.setPower(backRightPower);
+        hardware.leftFront.setPower(frontLeftPower);
+        hardware.rightFront.setPower(frontRightPower);
+        hardware.leftRear.setPower(backLeftPower);
+        hardware.rightRear.setPower(backRightPower);
 
         // Gamepad2 controls
         // Intake
         if (gamepad2.left_trigger > .1) {
             intakeSubsystem.run();
-        } else if (gamepad2.dpad_down) {
-            intakeSubsystem.reverse();
-        } else if (gamepad2.b) {
+        } else {
             intakeSubsystem.stop();
         }
+
+            outtakeSubsystem.setVelocity(gamepad2.right_trigger*2000);
+
 
        
 
         // Indexer kicks
-        if (gamepad2.x) {
+        if (gamepad2.dpad_down) {
             indexerSubsystem.kickAll();
-        } else if (gamepad2.left_bumper) {
+        } else if (gamepad2.dpad_left) {
             indexerSubsystem.kickPurple();
-        } else if (gamepad2.right_bumper) {
+        } else if (gamepad2.dpad_right) {
             indexerSubsystem.kickGreen();
         }
 
         // Extension (assuming continuous rotation: 0.5 stop, >0.5 one way, <0.5 other)
-        if (gamepad2.left_trigger > 0.5) {
-            hardware.extensionServo1.setPower(1.0); // Extend
-            hardware.extensionServo2.setPower(1.0);
-        } else if (gamepad2.right_trigger > 0.5) {
-            hardware.extensionServo1.setPower(-1.0); // Retract
-            hardware.extensionServo2.setPower(-1.0);
+        if (gamepad2.left_bumper) {
+            hardware.leftScrew.setPower(1.0); // Extend
+            hardware.rightScrew.setPower(1.0);
+        } else if (gamepad2.right_bumper) {
+            hardware.leftScrew.setPower(-1.0); // Retract
+            hardware.rightScrew.setPower(-1.0);
         } else {
-            hardware.extensionServo1.setPower(0.0);
-            hardware.extensionServo2.setPower(0.0);
+            hardware.leftScrew.setPower(0.0);
+            hardware.rightScrew.setPower(0.0);
         }
 
         // Update indexer lights
@@ -116,8 +115,8 @@ public class HydraTeleOp extends OpMode {
         intakeSubsystem.stop();
         outtakeSubsystem.stop();
         indexerSubsystem.resetAll();
-        hardware.extensionServo1.setPower(0.0);
-        hardware.extensionServo2.setPower(0.0);
+        hardware.leftScrew.setPower(0.0);
+        hardware.rightScrew.setPower(0.0);
     }
 
     

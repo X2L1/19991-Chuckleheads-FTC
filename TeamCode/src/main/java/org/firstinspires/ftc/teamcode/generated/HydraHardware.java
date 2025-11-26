@@ -12,94 +12,94 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class HydraHardware {
 
     // Drive motors (assuming Swyft Drive V2 mecanum with 4 motors, using DcMotorEx for extended features)
-    public DcMotorEx frontLeftMotor;
-    public DcMotorEx frontRightMotor;
-    public DcMotorEx backLeftMotor;
-    public DcMotorEx backRightMotor;
+    public DcMotorEx leftFront;
+    public DcMotorEx rightFront;
+    public DcMotorEx leftRear;
+    public DcMotorEx rightRear;
 
     // Intake motor (using DcMotorEx)
-    public DcMotorEx intakeMotor;
+    public DcMotorEx intake;
 
     // Chamber kick-up panels (3 Swyft Speed servos)
-    public Servo chamberServo1;
-    public Servo chamberServo2;
-    public Servo chamberServo3;
+    public Servo leftChamber;
+    public Servo centerChamber;
+    public Servo rightChamber;
 
     // Shooter motors (3 goBILDA 5203 motors, right one reversed, using DcMotorEx for velocity control)
-    public DcMotorEx shooterMotorLeft;
-    public DcMotorEx shooterMotorCenter;
-    public DcMotorEx shooterMotorRight;
+    public DcMotorEx outtakeLeft;
+    public DcMotorEx outtakeCenter;
+    public DcMotorEx outtakeRight;
 
     // Shooter angle adjustment
-    public Servo angleServoLeft;
-    public Servo angleServoRight;
+    //public Servo angleServoLeft;
+    public Servo outerHood;
 
 
     // Extension mechanism (2 lead screws with continuous rotation servos)
-    public CRServo extensionServo1;
-    public CRServo extensionServo2;
+    public CRServo leftScrew;
+    public CRServo rightScrew;
 
     // Color sensors (3 REV V3 color sensors)
-    public ColorSensor colorSensor1;
-    public ColorSensor colorSensor2;
-    public ColorSensor colorSensor3;
+    public ColorSensor leftColorSensor;
+    public ColorSensor centerColorSensor;
+    public ColorSensor rightColorSensor;
 
     // RGB lights (goBILDA RGB lights run as servos)
-    public Servo rgbLight1;
-    public Servo rgbLight2;
-    public Servo rgbLight3;
+    public Servo leftRGB;
+    public Servo centerRGB;
+    public Servo rightRGB;
 
     // Pinpoint (For Odometry)
     public GoBildaPinpointDriver pinpoint;
 
     public void init(HardwareMap hardwareMap) {
         // Initialize drive motors
-        frontLeftMotor = hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
-        frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
-        backLeftMotor = hardwareMap.get(DcMotorEx.class, "backLeftMotor");
-        backRightMotor = hardwareMap.get(DcMotorEx.class, "backRightMotor");
+        leftFront = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        rightFront = hardwareMap.get(DcMotorEx.class, "frontRight");
+        leftRear = hardwareMap.get(DcMotorEx.class, "backLeft");
+        rightRear = hardwareMap.get(DcMotorEx.class, "backRight");
 
         // Set directions for mecanum drive (adjust as needed based on robot configuration)
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Initialize intake motor
-        intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
-        intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Initialize chamber servos
-        chamberServo1 = hardwareMap.get(Servo.class, "chamberServo1");
-        chamberServo2 = hardwareMap.get(Servo.class, "chamberServo2");
-        chamberServo3 = hardwareMap.get(Servo.class, "chamberServo3");
+        leftChamber = hardwareMap.get(Servo.class, "leftChamber");
+        centerChamber = hardwareMap.get(Servo.class, "centerChamber");
+        rightChamber = hardwareMap.get(Servo.class, "rightChamber");
 
         // Initialize shooter motors
-        shooterMotorLeft = hardwareMap.get(DcMotorEx.class, "shooterMotorLeft");
-        shooterMotorCenter = hardwareMap.get(DcMotorEx.class, "shooterMotorCenter");
-        shooterMotorRight = hardwareMap.get(DcMotorEx.class, "shooterMotorRight");
+        outtakeLeft = hardwareMap.get(DcMotorEx.class, "outtakeLeft");
+        outtakeCenter = hardwareMap.get(DcMotorEx.class, "outtakeCenter");
+        outtakeRight = hardwareMap.get(DcMotorEx.class, "outtakeRight");
 
-        shooterMotorLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        shooterMotorCenter.setDirection(DcMotorSimple.Direction.FORWARD);
-        shooterMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        outtakeLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        outtakeCenter.setDirection(DcMotorSimple.Direction.FORWARD);
+        outtakeRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Initialize angle servos
-        angleServoLeft = hardwareMap.get(Servo.class, "angleServoLeft");
-        angleServoRight = hardwareMap.get(Servo.class, "angleServoRight");
+        //angleServoLeft = hardwareMap.get(Servo.class, "angleServoLeft");
+        outerHood = hardwareMap.get(Servo.class, "outerHood");
 
         // Initialize extension servos
-        extensionServo1 = hardwareMap.get(CRServo.class, "extensionServo1");
-        extensionServo2 = hardwareMap.get(CRServo.class, "extensionServo2");
+        leftScrew = hardwareMap.get(CRServo.class, "leftScrew");
+        rightScrew = hardwareMap.get(CRServo.class, "rightScrew");
 
         // Initialize color sensors
-        colorSensor1 = hardwareMap.get(ColorSensor.class, "colorSensor1");
-        colorSensor2 = hardwareMap.get(ColorSensor.class, "colorSensor2");
-        colorSensor3 = hardwareMap.get(ColorSensor.class, "colorSensor3");
+        leftColorSensor = hardwareMap.get(ColorSensor.class, "leftColorSensor");
+        centerColorSensor = hardwareMap.get(ColorSensor.class, "centerColorSensor");
+        rightColorSensor = hardwareMap.get(ColorSensor.class, "rightColorSensor");
 
         // Initialize RGB lights as servos
-        rgbLight1 = hardwareMap.get(Servo.class, "rgbLight1");
-        rgbLight2 = hardwareMap.get(Servo.class, "rgbLight2");
-        rgbLight3 = hardwareMap.get(Servo.class, "rgbLight3");
+        leftRGB = hardwareMap.get(Servo.class, "leftRGB");
+        centerRGB = hardwareMap.get(Servo.class, "centerRGB");
+        rightRGB = hardwareMap.get(Servo.class, "rightRGB");
 
         // Initialize GoBILDA Pinpoint Odometry
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
