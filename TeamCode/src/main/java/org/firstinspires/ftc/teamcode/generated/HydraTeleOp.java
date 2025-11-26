@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode.generated;
+import static org.firstinspires.ftc.teamcode.generated.Utils.*;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -36,6 +38,7 @@ public class HydraTeleOp extends OpMode {
         hardware.pinpoint.update();
 
         // Drive controls (robot-centric mecanum)
+        //Strafe and turn inverted due to motor orientation
         double forward = -gamepad1.left_stick_y; // Negative for inversion if needed
         double strafe = gamepad1.right_stick_x;
         double turn = gamepad1.left_stick_x;
@@ -74,7 +77,7 @@ public class HydraTeleOp extends OpMode {
             intakeSubsystem.stop();
         }
 
-            outtakeSubsystem.setVelocity(gamepad2.right_trigger*2000);
+            outtakeSubsystem.setVelocity(gamepad2.right_trigger*600);
 
 
        
@@ -82,17 +85,16 @@ public class HydraTeleOp extends OpMode {
         // Indexer kicks
         if (gamepad2.dpad_down) {
             indexerSubsystem.kickAll();
-            try{
-                Thread.sleep(200);
-            }
-            catch (InterruptedException e){
-                //do nothing
-            }
+            sleep();
             indexerSubsystem.resetAll();
         } else if (gamepad2.dpad_left) {
             indexerSubsystem.kickPurple();
+            sleep();
+            indexerSubsystem.resetAll();
         } else if (gamepad2.dpad_right) {
             indexerSubsystem.kickGreen();
+            sleep();
+            indexerSubsystem.resetAll();
         }
 
         // Extension (assuming continuous rotation: 0.5 stop, >0.5 one way, <0.5 other)

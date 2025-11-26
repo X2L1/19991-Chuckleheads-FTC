@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.generated;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-public class MechanumChassis {
+public class MecanumChassis {
 
     private DcMotorEx leftFront;
     private DcMotorEx rightFront;
@@ -10,7 +10,7 @@ public class MechanumChassis {
     private DcMotorEx rightRear;
 
     // Constructor to initialize hardware
-    public MechanumChassis(HydraHardware hardware) {
+    public MecanumChassis(HydraHardware hardware) {
         this.leftFront = hardware.leftFront;
         this.rightFront = hardware.rightFront;
         this.leftRear = hardware.leftRear;
