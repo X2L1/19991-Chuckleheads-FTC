@@ -25,6 +25,21 @@ public class MecanumChassis {
         leftRear.setVelocity(drive + turn - strafe);
     }
 
+    public void drive(double universal) {
+        leftFront.setVelocity(universal);
+        rightFront.setVelocity(universal);
+        rightRear.setVelocity(universal);
+        leftRear.setVelocity(universal);
+    }
+
+    public void strafe(double universal) {
+        leftFront.setVelocity(1.0 - universal);
+        rightFront.setVelocity(1.0 - universal);
+        rightRear.setVelocity(1.0 - universal);
+        leftRear.setVelocity(1.0 - universal);
+    }
+
+
     // Retract the lead screws (full speed reverse)
 
 }
