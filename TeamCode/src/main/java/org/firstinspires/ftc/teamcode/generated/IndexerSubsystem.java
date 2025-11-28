@@ -30,11 +30,7 @@ public class IndexerSubsystem {
                 hardware.rightColorSensor
         };
 
-        rgbLights = new Servo[]{
-                hardware.leftRGB,
-                hardware.centerRGB,
-                hardware.rightRGB
-        };
+
     }
 
     // Detect the color of the artifact in a chamber using the color sensor
@@ -49,45 +45,22 @@ public class IndexerSubsystem {
             return ArtifactColor.NONE; // Empty or no detection
         } else if (green > 100 && green > red && green > blue) {
             return ArtifactColor.GREEN;
-        } else if (red > 100 && blue > 100 && green < 50) {
+        } else if (red > 100 && blue > 100 && green < 100) {
             return ArtifactColor.PURPLE;
         } else {
             return ArtifactColor.NONE; // Unknown or not matching
         }
     }
 
-    // Set the RGB light to match the artifact color
-    // Assuming PWM mapping: adjust positions based on goBILDA RGB documentation/testing
-    // (e.g., 0.0 = off, 0.4 ≈ green, 0.8 ≈ purple/magenta)
-    private void setRgbColor(Servo light, ArtifactColor color) {
-        double position;
-        switch (color) {
-            case GREEN:
-                position = 0.4; // Adjust for green
-                break;
-            case PURPLE:
-                position = 0.8; // Adjust for purple
-                break;
-            case NONE:
-            default:
-                position = 0.0; // Off
-                break;
-        }
-        light.setPosition(position);
-    }
 
-    // Update all RGB lights to reflect current chamber contents
-    // Call this periodically in your opmode loop
-    public void updateLights() {
-        for (int i = 0; i < 3; i++) {
-            ArtifactColor color = getArtifactColor(colorSensors[i]);
-            setRgbColor(rgbLights[i], color);
-        }
-    }
+
+
+
+
 
     // Kick a specific chamber by setting servo to kick position
     // Assume 1.0 is the kick/up position; adjust as needed
-    private void kickChamber(int chamberIndex) {
+    public void kickChamber(int chamberIndex) {
         if (chamberIndex >= 0 && chamberIndex < 3) {
             chamberServos[chamberIndex].setPosition(.55);
 

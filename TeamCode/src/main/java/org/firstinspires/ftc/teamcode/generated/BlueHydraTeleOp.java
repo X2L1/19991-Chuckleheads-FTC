@@ -6,15 +6,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name = "HydraTeleOp", group = "TeleOp")
-public class HydraTeleOp extends OpMode {
+@TeleOp(name = "BlueHydraTeleOp", group = "TeleOp")
+public class BlueHydraTeleOp extends OpMode {
 
     private HydraHardware hardware;
     private IntakeSubsystem intakeSubsystem;
     private OuttakeSubsystem outtakeSubsystem;
     private IndexerSubsystem indexerSubsystem;
-
-    
+    private enum RGBMode {
+        INDEX,
+        AIM_ASSIST
+    }
+    private RGBMode currentRGBMode = RGBMode.INDEX;
+    private RGBSubsystem rgbSubsystem;
 
     @Override
     public void init() {
@@ -24,7 +28,7 @@ public class HydraTeleOp extends OpMode {
         intakeSubsystem = new IntakeSubsystem(hardware);
         outtakeSubsystem = new OuttakeSubsystem(hardware);
         indexerSubsystem = new IndexerSubsystem(hardware);
-
+        rgbSubsystem = new RGBSubsystem(hardware);
         // Reset odometry position and IMU at start
         hardware.pinpoint.resetPosAndIMU();
 
@@ -77,7 +81,7 @@ public class HydraTeleOp extends OpMode {
             intakeSubsystem.stop();
         }
 
-            outtakeSubsystem.setVelocity(gamepad2.right_trigger*600);
+            outtakeSubsystem.setVelocity(gamepad2.right_trigger*700);
 
 
        
@@ -97,7 +101,7 @@ public class HydraTeleOp extends OpMode {
             indexerSubsystem.resetAll();
         }
 
-        // Extension (assuming continuous rotation: 0.5 stop, >0.5 one way, <0.5 other)
+        // Extension
         if (gamepad2.left_bumper) {
             hardware.leftScrew.setPower(1.0); // Extend
             hardware.rightScrew.setPower(1.0);
@@ -108,9 +112,21 @@ public class HydraTeleOp extends OpMode {
             hardware.leftScrew.setPower(0.0);
             hardware.rightScrew.setPower(0.0);
         }
-
-        // Update indexer lights
-        indexerSubsystem.updateLights();
+        if(currentRGBMode == RGBMode.INDEX){
+            // Set RGB lights to index mode
+            rgbSubsystem.setToBallColors();
+        }
+        else if(currentRGBMode == RGBMode.AIM_ASSIST){
+            // Set RGB lights to aim assist mode
+            rgbSubsystem.enableAlignmentAid(-1524, -1524); // Example target coordinates
+        }
+        if(gamepad1.a){
+            currentRGBMode = RGBMode.INDEX;
+            rgbSubsystem.disableAlignmentAid();
+        }
+        else if(gamepad2.b){
+            currentRGBMode = RGBMode.AIM_ASSIST;
+        }
 
         // Telemetry
         //telemetry.addData("Heading Lock", headingLockEnabled ? "Enabled" : "Disabled");

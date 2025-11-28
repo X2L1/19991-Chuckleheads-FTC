@@ -67,7 +67,7 @@ public class HydraHardware {
 
         // Initialize intake motor
         intake = hardwareMap.get(DcMotorEx.class, "intake");
-        intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Initialize chamber servos
         leftChamber = hardwareMap.get(Servo.class, "leftChamber");
@@ -81,7 +81,7 @@ public class HydraHardware {
 
         outtakeLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         outtakeCenter.setDirection(DcMotorSimple.Direction.FORWARD);
-        outtakeRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        outtakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Initialize angle servos
         //angleServoLeft = hardwareMap.get(Servo.class, "angleServoLeft");
@@ -106,8 +106,8 @@ public class HydraHardware {
 
         // Configure Pinpoint (adjust values based on your setup)
         pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD); // Or custom value, e.g., 19.894 ticks per mm
-        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        pinpoint.setOffsets(-84.0, -168.0, DistanceUnit.MM); // Example offsets in mm; adjust for your robot
+        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        pinpoint.setOffsets(-104.6, 225.425, DistanceUnit.MM); // Example offsets in mm; adjust for your robot
 
         // Reset position and calibrate IMU (call this when robot is stationary, e.g., at start of opmode)
         pinpoint.resetPosAndIMU();
