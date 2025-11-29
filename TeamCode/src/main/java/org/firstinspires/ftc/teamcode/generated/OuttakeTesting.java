@@ -86,7 +86,7 @@ public class OuttakeTesting extends LinearOpMode {
             telemetry.addData("Target Velocity", "%.0f ticks/s", targetVelocity);
             telemetry.addData("Actual Velocity (Center)", "%.0f ticks/s", hardware.outtakeCenter.getVelocity());
             telemetry.addData("Robot Pose", odometryUtils.getPose().toString());
-            telemetry.addData("Distance from goal", "%.2f mm", odometryUtils.getDistanceFromPoint(3352.8, -1524)); // Example goal position
+            telemetry.addData("Distance from goal", "%.2f mm", odometryUtils.getDistanceFromPoint(3352.8, 1524)); // Example goal position
             telemetry.update();
         }
 

@@ -62,8 +62,8 @@ public class HydraHardware {
         // Set directions for mecanum drive (adjust as needed based on robot configuration)
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftRear.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Initialize intake motor
         intake = hardwareMap.get(DcMotorEx.class, "intake");
@@ -106,8 +106,8 @@ public class HydraHardware {
 
         // Configure Pinpoint (adjust values based on your setup)
         pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD); // Or custom value, e.g., 19.894 ticks per mm
-        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        pinpoint.setOffsets(-104.6, 225.425, DistanceUnit.MM); // Example offsets in mm; adjust for your robot
+        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.REVERSED);
+        pinpoint.setOffsets(-104.6, 225.425, DistanceUnit.MM);
 
         // Reset position and calibrate IMU (call this when robot is stationary, e.g., at start of opmode)
         pinpoint.resetPosAndIMU();

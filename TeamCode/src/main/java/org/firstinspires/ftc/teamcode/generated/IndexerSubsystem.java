@@ -45,7 +45,7 @@ public class IndexerSubsystem {
             return ArtifactColor.NONE; // Empty or no detection
         } else if (green > 100 && green > red && green > blue) {
             return ArtifactColor.GREEN;
-        } else if (red > 100 && blue > 100 && green < 100) {
+        } else if (red > 900 && blue > 1500 && green < 1300) {
             return ArtifactColor.PURPLE;
         } else {
             return ArtifactColor.NONE; // Unknown or not matching
