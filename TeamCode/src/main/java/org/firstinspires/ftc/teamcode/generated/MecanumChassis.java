@@ -33,10 +33,10 @@ public class MecanumChassis {
     }
 
     public void strafe(double universal) {
-        leftFront.setVelocity(1.0 - universal);
-        rightFront.setVelocity(1.0 - universal);
-        rightRear.setVelocity(1.0 - universal);
-        leftRear.setVelocity(1.0 - universal);
+        leftFront.setVelocity(1500 + universal*1000);
+        rightFront.setVelocity(1500 - universal*1000);
+        rightRear.setVelocity(1500 + universal*1000);
+        leftRear.setVelocity(1500 - universal*1000);
     }
 
 
