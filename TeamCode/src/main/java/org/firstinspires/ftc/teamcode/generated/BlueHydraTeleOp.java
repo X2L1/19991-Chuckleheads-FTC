@@ -15,17 +15,20 @@ public class BlueHydraTeleOp extends OpMode {
     private IndexerSubsystem indexerSubsystem;
     private enum RGBMode {
         INDEX,
-        AIM_ASSIST
+        AIM_ASSIST,
+        SHOOTER_STATUS // New mode for shooter velocity feedback
     }
     private enum ShooterMode
     {
         FAR_ZONE,
         CLOSE_ZONE
     }
-    private RGBMode currentRGBMode = RGBMode.INDEX;
+    private RGBMode currentRGBMode = RGBMode.SHOOTER_STATUS; // Set new mode as default
     private RGBSubsystem rgbSubsystem;
     private ShooterMode shooterMode = ShooterMode.FAR_ZONE;
     private double targetVelocity;
+    private boolean velocityReached = false; // Flag to check if target velocity is reached
+
     @Override
     public void init() {
         hardware = new HydraHardware();
@@ -53,9 +56,9 @@ public class BlueHydraTeleOp extends OpMode {
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
-        
 
-        
+
+
 
         // Mecanum drive powers
         double frontLeftPower = forward + strafe + turn;
@@ -82,12 +85,12 @@ public class BlueHydraTeleOp extends OpMode {
         // Gamepad2 controls
         // Intake
         if (gamepad2.left_trigger > .1) {
-           // intakeSubsystem.run();
+            // intakeSubsystem.run();
             //HUMAN PLAYER FEEDING MODE
             targetVelocity = -1000;
 
         } else {
-           // intakeSubsystem.stop();
+            // intakeSubsystem.stop();
             // HUMAN PLAYER FEEDING MODE STOP
 
         }
@@ -98,7 +101,7 @@ public class BlueHydraTeleOp extends OpMode {
         }
         outtakeSubsystem.setVelocity(targetVelocity);
 
-       
+
 
         // Indexer kicks
         if (gamepad2.dpad_down) {
@@ -131,13 +134,31 @@ public class BlueHydraTeleOp extends OpMode {
             hardware.leftScrew.setPower(0.0);
             hardware.rightScrew.setPower(0.0);
         }
-        /*if(currentRGBMode == RGBMode.INDEX){
+        if(currentRGBMode == RGBMode.INDEX){
             // Set RGB lights to index mode
             rgbSubsystem.setToBallColors();
         }
         else if(currentRGBMode == RGBMode.AIM_ASSIST){
             // Set RGB lights to aim assist mode
-            rgbSubsystem.enableAlignmentAid(-1524, -1524); // Example target coordinates
+            rgbSubsystem.enableAlignmentAid(-1524, -1524); // Example target coordinates; adjust to actual goal position
+            rgbSubsystem.update();
+        }
+        else if(currentRGBMode == RGBMode.SHOOTER_STATUS) {
+            // Check if target velocity is reached (with tolerance)
+            double currentVel = hardware.outtakeCenter.getVelocity(); // Use center as reference
+            velocityReached = Math.abs(currentVel - targetVelocity) < 50; // 50 unit tolerance
+
+            if (velocityReached) {
+                // Flash rainbow when velocity reached
+                rgbSubsystem.enableAlignmentAid(0, 0); // Dummy call to use rainbow logic; or implement separate rainbow flash
+                rgbSubsystem.update(); // This will run the rainbow flashing
+            } else {
+                // Set solid color based on shooter mode / velocity
+                String color = (shooterMode == ShooterMode.CLOSE_ZONE) ? "green" : "red";
+                rgbSubsystem.setColor(hardware.leftRGB, color);
+                rgbSubsystem.setColor(hardware.centerRGB, color);
+                rgbSubsystem.setColor(hardware.rightRGB, color);
+            }
         }
         if(gamepad1.a){
             currentRGBMode = RGBMode.INDEX;
@@ -146,7 +167,6 @@ public class BlueHydraTeleOp extends OpMode {
         else if(gamepad2.b){
             currentRGBMode = RGBMode.AIM_ASSIST;
         }
-        */
 
         if(shooterMode == ShooterMode.FAR_ZONE){
             if(gamepad2.right_trigger > .2)
@@ -154,10 +174,6 @@ public class BlueHydraTeleOp extends OpMode {
                 targetVelocity = 1100; // Far zone velocity
             }
 
-            rgbSubsystem.setColor(hardware.leftRGB, "green");
-            rgbSubsystem.setColor(hardware.centerRGB, "green");
-            rgbSubsystem.setColor(hardware.rightRGB, "green");
-            rgbSubsystem.update();
             if(gamepad2.y){
                 shooterMode = ShooterMode.CLOSE_ZONE;
             }
@@ -167,9 +183,6 @@ public class BlueHydraTeleOp extends OpMode {
             {
                 targetVelocity = 750; // Close zone velocity
             }
-            rgbSubsystem.setColor(hardware.leftRGB, "red");
-            rgbSubsystem.setColor(hardware.centerRGB, "red");
-            rgbSubsystem.setColor(hardware.rightRGB, "red");
             if(gamepad2.x){
                 shooterMode = ShooterMode.FAR_ZONE;
             }
@@ -190,5 +203,5 @@ public class BlueHydraTeleOp extends OpMode {
         hardware.rightScrew.setPower(0.0);
     }
 
-    
+
 }
