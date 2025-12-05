@@ -25,7 +25,7 @@ public class BlueHydraTeleOp extends OpMode {
     }
     private RGBMode currentRGBMode = RGBMode.SHOOTER_STATUS; // Set new mode as default
     private RGBSubsystem rgbSubsystem;
-    private ShooterMode shooterMode = ShooterMode.FAR_ZONE;
+    private ShooterMode shooterMode = ShooterMode.CLOSE_ZONE;
     private double targetVelocity;
     private boolean velocityReached = false; // Flag to check if target velocity is reached
 
@@ -84,18 +84,18 @@ public class BlueHydraTeleOp extends OpMode {
 
         // Gamepad2 controls
         // Intake
-        if (gamepad2.left_trigger > .1) {
-            // intakeSubsystem.run();
+        if (gamepad1.left_trigger > .1) {
+             intakeSubsystem.run();
+             targetVelocity = 200;
             //HUMAN PLAYER FEEDING MODE
-            targetVelocity = -1000;
+            //targetVelocity = -1000;
 
         } else {
-            // intakeSubsystem.stop();
-            // HUMAN PLAYER FEEDING MODE STOP
+            intakeSubsystem.stop();
 
         }
 
-        if(gamepad2.right_trigger == 0 && gamepad2.left_trigger == 0)
+        if(gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0)
         {
             targetVelocity = 0; //Stop outtake
         }
@@ -104,30 +104,30 @@ public class BlueHydraTeleOp extends OpMode {
 
 
         // Indexer kicks
-        if (gamepad2.dpad_down) {
+        if (gamepad1.dpad_down) {
             indexerSubsystem.kickAll();
             sleep();
             indexerSubsystem.resetAll();
-        } else if (gamepad2.dpad_left) {
+        } else if (gamepad1.dpad_left) {
             indexerSubsystem.kickChamber(0); // Left chamber
             sleep();
             indexerSubsystem.resetAll();
-        } else if (gamepad2.dpad_right) {
+        } else if (gamepad1.dpad_right) {
             indexerSubsystem.kickChamber(2); // Right chamber
             sleep();
             indexerSubsystem.resetAll();
         }
-        else if (gamepad2.dpad_up) {
+        else if (gamepad1.dpad_up) {
             indexerSubsystem.kickChamber(1); // Center chamber
             sleep();
             indexerSubsystem.resetAll();
         }
 
         // Extension
-        if (gamepad2.left_bumper) {
+        if (gamepad1.left_bumper) {
             hardware.leftScrew.setPower(1.0); // Extend
             hardware.rightScrew.setPower(1.0);
-        } else if (gamepad2.right_bumper) {
+        } else if (gamepad1.right_bumper) {
             hardware.leftScrew.setPower(-1.0); // Retract
             hardware.rightScrew.setPower(-1.0);
         } else {
@@ -150,7 +150,10 @@ public class BlueHydraTeleOp extends OpMode {
 
             if (velocityReached) {
                 // Flash rainbow when velocity reached
-                rgbSubsystem.enableAlignmentAid(0, 0); // Dummy call to use rainbow logic; or implement separate rainbow flash
+                rgbSubsystem.setColor(hardware.leftRGB, "indigo");
+                rgbSubsystem.setColor(hardware.centerRGB, "indigo");
+                rgbSubsystem.setColor(hardware.rightRGB, "indigo");
+
                 rgbSubsystem.update(); // This will run the rainbow flashing
             } else {
                 // Set solid color based on shooter mode / velocity
@@ -161,35 +164,40 @@ public class BlueHydraTeleOp extends OpMode {
             }
         }
         if(gamepad1.a){
-            currentRGBMode = RGBMode.INDEX;
-            rgbSubsystem.disableAlignmentAid();
+            indexerSubsystem.kickPurple();
+            sleep();
+            indexerSubsystem.resetAll();
         }
-        else if(gamepad2.b){
-            currentRGBMode = RGBMode.AIM_ASSIST;
+        else if(gamepad1.b){
+            indexerSubsystem.kickGreen();
+            sleep();
+            indexerSubsystem.resetAll();
         }
 
         if(shooterMode == ShooterMode.FAR_ZONE){
-            if(gamepad2.right_trigger > .2)
+            if(gamepad1.right_trigger > .2)
             {
                 targetVelocity = 1100; // Far zone velocity
             }
 
-            if(gamepad2.y){
+            if(gamepad1.y){
                 shooterMode = ShooterMode.CLOSE_ZONE;
             }
         }
         else if(shooterMode == ShooterMode.CLOSE_ZONE){
-            if(gamepad2.right_trigger > .2)
+            if(gamepad1.right_trigger > .2)
             {
                 targetVelocity = 750; // Close zone velocity
             }
-            if(gamepad2.x){
+            if(gamepad1.y){
                 shooterMode = ShooterMode.FAR_ZONE;
             }
         }
+
         // Telemetry
         //telemetry.addData("Heading Lock", headingLockEnabled ? "Enabled" : "Disabled");
         telemetry.addData("Current Heading", hardware.pinpoint.getPosition().getHeading(AngleUnit.DEGREES));
+        telemetry.addData("Outtake Velocity", hardware.outtakeCenter.getVelocity());
         telemetry.update();
     }
 

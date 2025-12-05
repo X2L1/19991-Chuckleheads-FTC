@@ -30,7 +30,6 @@ public class BlueAuton extends LinearOpMode {
 
         // Reset and configure drive encoders
         resetDriveEncoders();
-        setDriveMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         telemetry.addData("Status", "Initialized - Ready");
         telemetry.update();
@@ -48,7 +47,7 @@ public class BlueAuton extends LinearOpMode {
         shootSequence(1100, 400); // velocity, delay after spin-up (ms)
 
         // === STEP 3: Second Movement (Park / Next Cycle) ===
-        driveToPosition(-202, 1004, 970, -2544, 0.7);
+        driveToPosition(-202-50, 1004+50, 970+50, -2544-50, 0.7);
         stopDriveMotors();
 
         outtakeSubsystem.stop();
@@ -117,7 +116,7 @@ public class BlueAuton extends LinearOpMode {
 
         // Wait until actually at speed (±50 tolerance)
         while (opModeIsActive() &&
-                Math.abs(hardware.outtakeCenter.getVelocity() - velocity) > 50) {
+                Math.abs(hardware.outtakeLeft.getVelocity() - velocity) > 50) {
             telemetry.addData("Shooter Vel", "%.0f", hardware.outtakeCenter.getVelocity());
             telemetry.update();
 
@@ -128,12 +127,12 @@ public class BlueAuton extends LinearOpMode {
             indexerSubsystem.kickChamber(i);
             sleep(200);
             indexerSubsystem.resetChamber(i);
-            sleep(500);
+            sleep(100);
         }
 
         // Final sweep
         indexerSubsystem.kickAll();
-        sleep(200);
+        sleep(100);
         indexerSubsystem.resetAll();
     }
 }

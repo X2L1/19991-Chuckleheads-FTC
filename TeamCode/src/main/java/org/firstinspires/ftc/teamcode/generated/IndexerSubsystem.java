@@ -88,6 +88,7 @@ public class IndexerSubsystem {
         for (int i = 0; i < 3; i++) {
             if (getArtifactColor(colorSensors[i]) == ArtifactColor.PURPLE) {
                 kickChamber(i);
+                break;
             }
         }
     }
@@ -97,6 +98,7 @@ public class IndexerSubsystem {
         for (int i = 0; i < 3; i++) {
             if (getArtifactColor(colorSensors[i]) == ArtifactColor.GREEN) {
                 kickChamber(i);
+                break;
             }
         }
     }
