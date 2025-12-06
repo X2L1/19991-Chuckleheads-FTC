@@ -99,8 +99,6 @@ public class BlueHydraTeleOp extends OpMode {
         {
             targetVelocity = 0; //Stop outtake
         }
-        outtakeSubsystem.setVelocity(targetVelocity);
-
 
 
         // Indexer kicks
@@ -122,6 +120,8 @@ public class BlueHydraTeleOp extends OpMode {
             sleep();
             indexerSubsystem.resetAll();
         }
+        outtakeSubsystem.setVelocity(targetVelocity);
+        sleep(100);
 
         // Extension
         if (gamepad1.left_bumper) {
