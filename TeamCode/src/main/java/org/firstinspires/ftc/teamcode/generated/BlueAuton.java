@@ -114,12 +114,12 @@ public class BlueAuton extends LinearOpMode {
 
         sleep(spinUpDelayMs);
 
-        // Wait until actually at speed (±50 tolerance)
+        // Wait until actually at speed (±20 tolerance)
         while (opModeIsActive() &&
-                Math.abs(hardware.outtakeLeft.getVelocity() - velocity) > 50) {
+                Math.abs(hardware.outtakeLeft.getVelocity() - velocity) > 20) {
             telemetry.addData("Shooter Vel", "%.0f", hardware.outtakeCenter.getVelocity());
             telemetry.update();
-
+            idle();
         }
 
         // Shoot everything (double-kick for reliability)
