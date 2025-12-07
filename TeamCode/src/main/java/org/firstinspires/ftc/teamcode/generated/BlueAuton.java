@@ -44,10 +44,10 @@ public class BlueAuton extends LinearOpMode {
         stopDriveMotors();
 
         // === STEP 2: Shoot Preload + Any Loaded Balls ===
-        shootSequence(1100, 400); // velocity, delay after spin-up (ms)
+        shootSequence(920, 400); // velocity, delay after spin-up (ms)
 
         // === STEP 3: Second Movement (Park / Next Cycle) ===
-        driveToPosition(-202-50, 1004+50, 970+50, -2544-50, 0.7);
+        driveToPosition(1000, 1000, -1000, -1000, 0.7);
         stopDriveMotors();
 
         outtakeSubsystem.stop();

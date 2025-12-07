@@ -85,8 +85,8 @@ public class BlueHydraTeleOp extends OpMode {
         // Gamepad2 controls
         // Intake
         if (gamepad1.left_trigger > .1) {
-             intakeSubsystem.run();
-             targetVelocity = 200;
+             //intakeSubsystem.run();
+             targetVelocity = -300;
             //HUMAN PLAYER FEEDING MODE
             //targetVelocity = -1000;
 
@@ -177,7 +177,7 @@ public class BlueHydraTeleOp extends OpMode {
         if(shooterMode == ShooterMode.FAR_ZONE){
             if(gamepad1.right_trigger > .2)
             {
-                targetVelocity = 1100; // Far zone velocity
+                targetVelocity = 920; // Far zone velocity
             }
 
             if(gamepad1.y){
