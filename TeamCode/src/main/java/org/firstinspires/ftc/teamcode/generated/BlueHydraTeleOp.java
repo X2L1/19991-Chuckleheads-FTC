@@ -84,7 +84,7 @@ public class BlueHydraTeleOp extends OpMode {
 
         // Gamepad2 controls
         // Intake
-        if (gamepad1.left_trigger > .1) {
+        if (gamepad2.left_trigger > .1) {
              //intakeSubsystem.run();
              targetVelocity = -300;
             //HUMAN PLAYER FEEDING MODE
@@ -95,27 +95,27 @@ public class BlueHydraTeleOp extends OpMode {
 
         }
 
-        if(gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0)
+        if(gamepad2.right_trigger == 0 && gamepad2.left_trigger == 0)
         {
             targetVelocity = 0; //Stop outtake
         }
 
 
         // Indexer kicks
-        if (gamepad1.dpad_down) {
+        if (gamepad2.dpad_down) {
             indexerSubsystem.kickAll();
             sleep();
             indexerSubsystem.resetAll();
-        } else if (gamepad1.dpad_left) {
+        } else if (gamepad2.dpad_left) {
             indexerSubsystem.kickChamber(0); // Left chamber
             sleep();
             indexerSubsystem.resetAll();
-        } else if (gamepad1.dpad_right) {
+        } else if (gamepad2.dpad_right) {
             indexerSubsystem.kickChamber(2); // Right chamber
             sleep();
             indexerSubsystem.resetAll();
         }
-        else if (gamepad1.dpad_up) {
+        else if (gamepad2.dpad_up) {
             indexerSubsystem.kickChamber(1); // Center chamber
             sleep();
             indexerSubsystem.resetAll();
@@ -124,10 +124,10 @@ public class BlueHydraTeleOp extends OpMode {
         sleep(100);
 
         // Extension
-        if (gamepad1.left_bumper) {
+        if (gamepad2.left_bumper) {
             hardware.leftScrew.setPower(1.0); // Extend
             hardware.rightScrew.setPower(1.0);
-        } else if (gamepad1.right_bumper) {
+        } else if (gamepad2.right_bumper) {
             hardware.leftScrew.setPower(-1.0); // Retract
             hardware.rightScrew.setPower(-1.0);
         } else {
@@ -163,33 +163,33 @@ public class BlueHydraTeleOp extends OpMode {
                 rgbSubsystem.setColor(hardware.rightRGB, color);
             }
         }
-        if(gamepad1.a){
+        if(gamepad2.a){
             indexerSubsystem.kickPurple();
             sleep();
             indexerSubsystem.resetAll();
         }
-        else if(gamepad1.b){
+        else if(gamepad2.b){
             indexerSubsystem.kickGreen();
             sleep();
             indexerSubsystem.resetAll();
         }
 
         if(shooterMode == ShooterMode.FAR_ZONE){
-            if(gamepad1.right_trigger > .2)
+            if(gamepad2.right_trigger > .2)
             {
-                targetVelocity = 920; // Far zone velocity
+                targetVelocity = 1840; // Far zone velocity
             }
 
-            if(gamepad1.y){
+            if(gamepad2.y){
                 shooterMode = ShooterMode.CLOSE_ZONE;
             }
         }
         else if(shooterMode == ShooterMode.CLOSE_ZONE){
-            if(gamepad1.right_trigger > .2)
+            if(gamepad2.right_trigger > .2)
             {
-                targetVelocity = 750; // Close zone velocity
+                targetVelocity = 1500; // Close zone velocity
             }
-            if(gamepad1.y){
+            if(gamepad2.y){
                 shooterMode = ShooterMode.FAR_ZONE;
             }
         }
@@ -198,6 +198,7 @@ public class BlueHydraTeleOp extends OpMode {
         //telemetry.addData("Heading Lock", headingLockEnabled ? "Enabled" : "Disabled");
         telemetry.addData("Current Heading", hardware.pinpoint.getPosition().getHeading(AngleUnit.DEGREES));
         telemetry.addData("Outtake Velocity", hardware.outtakeCenter.getVelocity());
+        telemetry.addData("Intended Velocity on Code", targetVelocity);
         telemetry.update();
     }
 

@@ -13,7 +13,7 @@ public class BlueAuton extends LinearOpMode {
     private HydraHardware hardware;
     private OuttakeSubsystem outtakeSubsystem;
     private IndexerSubsystem indexerSubsystem;
-
+    private IntakeSubsystem intakeSubsystem;
     private final ElapsedTime runtime = new ElapsedTime();
 
     @Override
@@ -24,7 +24,7 @@ public class BlueAuton extends LinearOpMode {
 
         outtakeSubsystem = new OuttakeSubsystem(hardware);
         indexerSubsystem = new IndexerSubsystem(hardware);
-
+        intakeSubsystem = new IntakeSubsystem(hardware);
         // Reset odometry at the very start (critical!)
         hardware.pinpoint.resetPosAndIMU();
 
@@ -40,14 +40,19 @@ public class BlueAuton extends LinearOpMode {
         if (!opModeIsActive()) return;
 
         // === STEP 1: First Movement ===
-        driveToPosition(4, 450, 103, 343, 0.6);
+        driveToPosition(4, 450, 103, 343, 0.8);
         stopDriveMotors();
 
         // === STEP 2: Shoot Preload + Any Loaded Balls ===
         shootSequence(920, 400); // velocity, delay after spin-up (ms)
-
-        // === STEP 3: Second Movement (Park / Next Cycle) ===
+        // === STEP 3: Run Intake ===
+        intakeSubsystem.run();
+        outtakeSubsystem.setVelocity(200);
+        // === STEP 4: Second Movement (Next Cycle) ===
         driveToPosition(1000, 1000, -1000, -1000, 0.7);
+        // === STEP 5: Shoot Again ===
+        driveToPosition(4,450, 103, 343, 1);
+        shootSequence(920, 400); // velocity, delay after spin-up (ms)
         stopDriveMotors();
 
         outtakeSubsystem.stop();
@@ -123,16 +128,13 @@ public class BlueAuton extends LinearOpMode {
         }
 
         // Shoot everything (double-kick for reliability)
-        for (int i = 0; i < 3; i++) {
-            indexerSubsystem.kickChamber(i);
-            sleep(200);
-            indexerSubsystem.resetChamber(i);
+        for (int i = 0; i < 2; i++) {
+            indexerSubsystem.kickAll();
+            sleep(100); // Wait for kick to complete
+            indexerSubsystem.resetAll();
             sleep(100);
         }
 
-        // Final sweep
-        indexerSubsystem.kickAll();
-        sleep(100);
-        indexerSubsystem.resetAll();
+
     }
 }
