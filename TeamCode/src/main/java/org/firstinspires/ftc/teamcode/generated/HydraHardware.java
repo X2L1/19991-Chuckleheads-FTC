@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.generated;
 
+import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -20,6 +21,7 @@ public class HydraHardware {
     // Intake motor (using DcMotorEx)
     public DcMotorEx intake;
 
+    public HuskyLens huskyLens;
     // Chamber kick-up panels (3 Swyft Speed servos)
     public Servo leftChamber;
     public Servo centerChamber;
@@ -69,6 +71,7 @@ public class HydraHardware {
         intake = hardwareMap.get(DcMotorEx.class, "intake");
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        huskyLens = hardwareMap.get(HuskyLens.class, "huskyLens");
         // Initialize chamber servos
         leftChamber = hardwareMap.get(Servo.class, "leftChamber");
         centerChamber = hardwareMap.get(Servo.class, "centerChamber");

@@ -12,6 +12,7 @@ public class OuttakeTesting extends LinearOpMode {
     private OuttakeSubsystem outtakeSubsystem;
     private IndexerSubsystem indexerSubsystem;
     private OdometryUtils odometryUtils;
+    private HuskyLensTester huskyLens;
 
     private double targetVelocity = 0.0; // Starting velocity (ticks per second)
     private double velocityStep = 10.0; // Amount to adjust velocity per button press
@@ -87,6 +88,7 @@ public class OuttakeTesting extends LinearOpMode {
             telemetry.addData("Actual Velocity (Center)", "%.0f ticks/s", hardware.outtakeCenter.getVelocity());
             telemetry.addData("Robot Pose", odometryUtils.getPose().toString());
             telemetry.addData("Distance from goal", "%.2f mm", odometryUtils.getDistanceFromPoint(3352.8, 1524)); // Example goal position
+            telemetry.addData("Distance from tag:", huskyLens.getDistance());
             telemetry.update();
         }
 
