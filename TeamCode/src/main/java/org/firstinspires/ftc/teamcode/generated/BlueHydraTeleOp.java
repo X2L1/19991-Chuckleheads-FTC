@@ -14,7 +14,7 @@ public class BlueHydraTeleOp extends OpMode {
     private IntakeSubsystem intakeSubsystem;
     private OuttakeSubsystem outtakeSubsystem;
     private IndexerSubsystem indexerSubsystem;
-
+    private HuskyLensTester huskyLens;
     private enum RGBMode {
         INDEX,
         AIM_ASSIST,
@@ -42,7 +42,7 @@ public class BlueHydraTeleOp extends OpMode {
         rgbSubsystem = new RGBSubsystem(hardware);
         // Reset odometry position and IMU at start
         hardware.pinpoint.resetPosAndIMU();
-        outtakeSubsystem.setPIDFCoefficients(15, 0.02, 0.2, 11.75);
+        outtakeSubsystem.setPIDFCoefficients(PIDFCoefficients.getOuttakeP(), PIDFCoefficients.getOuttakeI(), PIDFCoefficients.getOuttakeD(), PIDFCoefficients.getOuttakeF());
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
@@ -179,7 +179,7 @@ public class BlueHydraTeleOp extends OpMode {
         if(shooterMode == ShooterMode.FAR_ZONE){
             if(gamepad2.right_trigger > .2)
             {
-                targetVelocity = 1840; // Far zone velocity
+                targetVelocity = outtakeSubsystem.blueVelocity(huskyLens); // Far zone velocity
             }
 
             if(gamepad2.y){
@@ -189,7 +189,7 @@ public class BlueHydraTeleOp extends OpMode {
         else if(shooterMode == ShooterMode.CLOSE_ZONE){
             if(gamepad2.right_trigger > .2)
             {
-                targetVelocity = 1500; // Close zone velocity
+                targetVelocity = outtakeSubsystem.blueVelocity(huskyLens); // Close zone velocity
             }
             if(gamepad2.y){
                 shooterMode = ShooterMode.FAR_ZONE;
@@ -201,6 +201,7 @@ public class BlueHydraTeleOp extends OpMode {
         telemetry.addData("Current Heading", hardware.pinpoint.getPosition().getHeading(AngleUnit.DEGREES));
         telemetry.addData("Outtake Velocity", hardware.outtakeCenter.getVelocity());
         telemetry.addData("Intended Velocity on Code", targetVelocity);
+        telemetry.addData("Distance from tag: ", huskyLens.getDistance(1));
         telemetry.update();
     }
 

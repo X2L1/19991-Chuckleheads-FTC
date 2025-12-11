@@ -383,14 +383,8 @@ public class HuskyLensTester extends LinearOpMode {
         return direction;
     }
     public double getDistance(int desiredTagID) {
-        HuskyLens.Block[] blocks = huskyLens.blocks();
 
-        for (HuskyLens.Block block : blocks) {
-            if (desiredTagID == -1 || block.id == desiredTagID) {
-                return (10.58888888883 * 30) / (2 * block.width * Math.tan(0.925/2)) * 5.5;
-            }
-        }
 
-        return 0;
+        return dista;
     }
 }

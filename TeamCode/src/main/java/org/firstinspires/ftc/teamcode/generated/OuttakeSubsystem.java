@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.generated;
 
 import com.bylazar.configurables.annotations.Configurable;
+import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -45,6 +46,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
         outtakeLeft.setVelocity(velocity);
         outtakeCenter.setVelocity(velocity);
         outtakeRight.setVelocity(velocity); // Assumes positive velocity works with reversed direction
+    }
+    public double blueVelocity(HuskyLensTester huskyLensTester)
+    {
+        return 6.662*huskyLensTester.getDistance(1) + 1126;
+    }
+    public double redVelocity(HuskyLensTester huskyLensTester)
+    {
+        return 6.662*huskyLensTester.getDistance(2) + 1126;
     }
 
     // Set shooter angle (assuming both servos move together; adjust if one needs inversion)
