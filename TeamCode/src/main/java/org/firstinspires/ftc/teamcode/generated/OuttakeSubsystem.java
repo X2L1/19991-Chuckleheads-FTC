@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.generated;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 
 
-public class OuttakeSubsystem {
+@Configurable public class OuttakeSubsystem {
 
     private DcMotorEx outtakeLeft;
     private DcMotorEx outtakeCenter;
@@ -31,7 +32,9 @@ public class OuttakeSubsystem {
         this.outerHood = hardware.outerHood;
 
         this.pinpoint = hardware.pinpoint;
-
+        outtakeLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        outtakeCenter.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        outtakeRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
 
     }
@@ -49,6 +52,16 @@ public class OuttakeSubsystem {
         outerHood.setPosition(angle);
 
     }
+    // In OuttakeSubsystem.java
+
+    public void setPIDFCoefficients(double p, double i, double d, double f) {
+        outtakeLeft.setVelocityPIDFCoefficients(p, i, d, f);
+        outtakeCenter.setVelocityPIDFCoefficients(p, i, d, f);
+        outtakeRight.setVelocityPIDFCoefficients(p, i, d, f);
+    }
+
+
+
 
     // Stop the shooter
     public void stop() {

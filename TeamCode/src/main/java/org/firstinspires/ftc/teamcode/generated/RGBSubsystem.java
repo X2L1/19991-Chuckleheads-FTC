@@ -20,14 +20,14 @@ public class RGBSubsystem {
 
     // Assumed positions for colors (calibrate during testing)
     private final double POS_OFF = 0.0;
-    private final double POS_RED = 0.1;
-    private final double POS_ORANGE = 0.2;
-    private final double POS_YELLOW = 0.3;
-    private final double POS_GREEN = 0.4;
-    private final double POS_BLUE = 0.5;
-    private final double POS_INDIGO = 0.6;
-    private final double POS_VIOLET = 0.7; // Purple
-    private final double POS_WHITE = 0.8;
+    private final double POS_RED = 0.28;
+    private final double POS_ORANGE = 0.33;
+    private final double POS_YELLOW = 0.38;
+    private final double POS_GREEN = 0.46;
+    private final double POS_BLUE = 0.6;
+    private final double POS_INDIGO = 0.66;
+    private final double POS_VIOLET = 0.72; // Purple
+    private final double POS_WHITE = 1;
 
     private final double[] rainbowColors = {POS_RED, POS_ORANGE, POS_YELLOW, POS_GREEN, POS_BLUE, POS_INDIGO, POS_VIOLET};
 

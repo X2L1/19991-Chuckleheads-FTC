@@ -30,7 +30,7 @@ public class OuttakeTesting extends LinearOpMode {
         // Initialize hardware and subsystems
         hardware = new HydraHardware();
         hardware.init(hardwareMap);
-
+        huskyLens = new HuskyLensTester(hardware.huskyLens);
         outtakeSubsystem = new OuttakeSubsystem(hardware);
         indexerSubsystem = new IndexerSubsystem(hardware);
         odometryUtils = new OdometryUtils(hardware.pinpoint);
@@ -88,7 +88,7 @@ public class OuttakeTesting extends LinearOpMode {
             telemetry.addData("Actual Velocity (Center)", "%.0f ticks/s", hardware.outtakeCenter.getVelocity());
             telemetry.addData("Robot Pose", odometryUtils.getPose().toString());
             telemetry.addData("Distance from goal", "%.2f mm", odometryUtils.getDistanceFromPoint(3352.8, 1524)); // Example goal position
-            telemetry.addData("Distance from tag:", huskyLens.getDistance());
+            telemetry.addData("Distance from tag: %2f", huskyLens.getDistance(1));
             telemetry.update();
         }
 

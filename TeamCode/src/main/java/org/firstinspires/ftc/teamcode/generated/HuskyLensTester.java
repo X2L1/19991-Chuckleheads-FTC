@@ -5,6 +5,7 @@ import static java.lang.Thread.sleep;
 
 
 import com.qualcomm.hardware.dfrobot.HuskyLens;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -31,7 +32,10 @@ public class HuskyLensTester extends LinearOpMode {
     public Servo leftKick, centerKick, rightKick, leftHood, rightHood;
     private String direction = "";
 
-
+    public HuskyLensTester(HuskyLens huskyLens)
+    {
+        this.huskyLens = huskyLens;
+    }
 
     @Override
     public void runOpMode() {
@@ -378,8 +382,15 @@ public class HuskyLensTester extends LinearOpMode {
     {
         return direction;
     }
-    public double getDistance()
-    {
-        return dista;
+    public double getDistance(int desiredTagID) {
+        HuskyLens.Block[] blocks = huskyLens.blocks();
+
+        for (HuskyLens.Block block : blocks) {
+            if (desiredTagID == -1 || block.id == desiredTagID) {
+                return (10.58888888883 * 30) / (2 * block.width * Math.tan(0.925/2)) * 5.5;
+            }
+        }
+
+        return 0;
     }
 }

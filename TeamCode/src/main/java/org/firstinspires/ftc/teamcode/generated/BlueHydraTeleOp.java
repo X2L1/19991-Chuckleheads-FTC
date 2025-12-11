@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.generated.Utils.*;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name = "BlueHydraTeleOp", group = "TeleOp")
@@ -13,6 +14,7 @@ public class BlueHydraTeleOp extends OpMode {
     private IntakeSubsystem intakeSubsystem;
     private OuttakeSubsystem outtakeSubsystem;
     private IndexerSubsystem indexerSubsystem;
+
     private enum RGBMode {
         INDEX,
         AIM_ASSIST,
@@ -40,7 +42,7 @@ public class BlueHydraTeleOp extends OpMode {
         rgbSubsystem = new RGBSubsystem(hardware);
         // Reset odometry position and IMU at start
         hardware.pinpoint.resetPosAndIMU();
-
+        outtakeSubsystem.setPIDFCoefficients(15, 0.02, 0.2, 11.75);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
@@ -85,8 +87,8 @@ public class BlueHydraTeleOp extends OpMode {
         // Gamepad2 controls
         // Intake
         if (gamepad2.left_trigger > .1) {
-             //intakeSubsystem.run();
-             targetVelocity = -300;
+             intakeSubsystem.run();
+             targetVelocity = 300;
             //HUMAN PLAYER FEEDING MODE
             //targetVelocity = -1000;
 
@@ -157,7 +159,7 @@ public class BlueHydraTeleOp extends OpMode {
                 rgbSubsystem.update(); // This will run the rainbow flashing
             } else {
                 // Set solid color based on shooter mode / velocity
-                String color = (shooterMode == ShooterMode.CLOSE_ZONE) ? "green" : "red";
+                String color = (shooterMode == ShooterMode.CLOSE_ZONE) ? "red" : "green";
                 rgbSubsystem.setColor(hardware.leftRGB, color);
                 rgbSubsystem.setColor(hardware.centerRGB, color);
                 rgbSubsystem.setColor(hardware.rightRGB, color);
