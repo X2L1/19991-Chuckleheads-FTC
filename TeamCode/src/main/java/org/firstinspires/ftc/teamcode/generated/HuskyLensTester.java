@@ -22,6 +22,7 @@ public class HuskyLensTester extends LinearOpMode {
     public final int greensleep = 100;
     public int servogreen = 0;
     public int greenmotiforder = 0;
+    private double disttemp = 0;
     private final int READ_PERIOD = 1;
     public final double up = 0.3;
     public double dista = 0;
@@ -382,9 +383,15 @@ public class HuskyLensTester extends LinearOpMode {
     {
         return direction;
     }
-    public double getDistance() {
+    public double getDistance(int desiredTagID) {
+        HuskyLens.Block[] blocks = huskyLens.blocks();
 
+        for (HuskyLens.Block block : blocks) {
+            if (desiredTagID == -1 || block.id == desiredTagID) {
+                disttemp = (10.58888888883 * 30) / (2 * block.width * Math.tan(0.925/2)) * 5.5;
+            }
+        }
 
-        return dista;
+        return disttemp;
     }
 }
