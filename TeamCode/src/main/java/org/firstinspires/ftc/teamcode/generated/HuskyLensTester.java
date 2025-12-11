@@ -382,7 +382,7 @@ public class HuskyLensTester extends LinearOpMode {
     {
         return direction;
     }
-    public double getDistance(int desiredTagID) {
+    public double getDistance() {
 
 
         return dista;
