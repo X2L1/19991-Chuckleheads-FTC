@@ -45,7 +45,7 @@ public class OuttakeTesting extends LinearOpMode {
 
         telemetry.addData("Status", "Initialized - Use dpad left/right to adjust velocity, dpad up to kick center");
         telemetry.update();
-        outtakeSubsystem.setPIDFCoefficients(PIDFCoefficients.getOuttakeP(), PIDFCoefficients.getOuttakeI(), PIDFCoefficients.getOuttakeD(), PIDFCoefficients.getOuttakeF());
+        //outtakeSubsystem.setPIDFCoefficients(PIDFCoefficients.getOuttakeP(), PIDFCoefficients.getOuttakeI(), PIDFCoefficients.getOuttakeD(), PIDFCoefficients.getOuttakeF());
         waitForStart();
 
         while (opModeIsActive()) {

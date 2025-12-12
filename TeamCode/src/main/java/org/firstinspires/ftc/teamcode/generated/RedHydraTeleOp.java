@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode.generated;
-import static org.firstinspires.ftc.teamcode.generated.Utils.*;
+
+import static org.firstinspires.ftc.teamcode.generated.Utils.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name = "BlueHydraTeleOp", group = "TeleOp")
-public class BlueHydraTeleOp extends OpMode {
+public class RedHydraTeleOp extends OpMode {
 
     private HydraHardware hardware;
     private IntakeSubsystem intakeSubsystem;
@@ -180,7 +180,7 @@ public class BlueHydraTeleOp extends OpMode {
         if(shooterMode == ShooterMode.FAR_ZONE){
             if(gamepad2.right_trigger > .2)
             {
-                targetVelocity = outtakeSubsystem.blueVelocity(huskyLens); // Far zone velocity
+                targetVelocity = outtakeSubsystem.redVelocity(huskyLens); // Far zone velocity
             }
 
             if(gamepad2.y){
@@ -190,7 +190,7 @@ public class BlueHydraTeleOp extends OpMode {
         else if(shooterMode == ShooterMode.CLOSE_ZONE){
             if(gamepad2.right_trigger > .2)
             {
-                targetVelocity = outtakeSubsystem.blueVelocity(huskyLens); // Close zone velocity
+                targetVelocity = outtakeSubsystem.redVelocity(huskyLens); // Close zone velocity
             }
             if(gamepad2.y){
                 shooterMode = ShooterMode.FAR_ZONE;
@@ -202,7 +202,7 @@ public class BlueHydraTeleOp extends OpMode {
         telemetry.addData("Current Heading", hardware.pinpoint.getPosition().getHeading(AngleUnit.DEGREES));
         telemetry.addData("Outtake Velocity", hardware.outtakeCenter.getVelocity());
         telemetry.addData("Intended Velocity on Code", targetVelocity);
-        telemetry.addData("Distance from tag: ", huskyLens.getDistance(1));
+        telemetry.addData("Distance from tag: ", huskyLens.getDistance(2));
         telemetry.update();
     }
 

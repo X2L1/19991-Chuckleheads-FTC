@@ -62,7 +62,7 @@ public class IndexerSubsystem {
     // Assume 1.0 is the kick/up position; adjust as needed
     public void kickChamber(int chamberIndex) {
         if (chamberIndex >= 0 && chamberIndex < 3) {
-            chamberServos[chamberIndex].setPosition(.55);
+            chamberServos[chamberIndex].setPosition(.52);
 
         }
     }

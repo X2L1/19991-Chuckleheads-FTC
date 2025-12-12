@@ -49,7 +49,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
     }
     public double blueVelocity(HuskyLensTester huskyLensTester)
     {
-        return 6.662*huskyLensTester.getDistance(1) + 1126;
+        return 6.7 * huskyLensTester.getDistance(1) + 1126;
     }
     public double redVelocity(HuskyLensTester huskyLensTester)
     {
