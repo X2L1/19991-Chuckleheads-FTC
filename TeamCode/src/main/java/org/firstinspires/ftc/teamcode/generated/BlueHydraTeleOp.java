@@ -146,6 +146,12 @@ public class BlueHydraTeleOp extends OpMode {
             rgbSubsystem.enableAlignmentAid(-1524, -1524); // Example target coordinates; adjust to actual goal position
             rgbSubsystem.update();
         }
+        if(gamepad2.psWasPressed())
+        {
+            intakeSubsystem.reverse();
+            sleep(1000);
+            intakeSubsystem.stop();
+        }
         else if(currentRGBMode == RGBMode.SHOOTER_STATUS) {
             // Check if target velocity is reached (with tolerance)
             double currentVel = hardware.outtakeLeft.getVelocity(); // Use center as reference

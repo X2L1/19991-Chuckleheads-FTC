@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static org.firstinspires.ftc.teamcode.generated.Utils.sleep;
 
-@Autonomous(name = "BlueAuton", group = "Autonomous")
-public class BlueAuton extends LinearOpMode {
+@Autonomous(name = "RedAuton", group = "Autonomous")
+public class RedAuton extends LinearOpMode {
 
     private HydraHardware hardware;
     private OuttakeSubsystem outtakeSubsystem;
@@ -31,8 +31,8 @@ public class BlueAuton extends LinearOpMode {
         INTAKE_SAMPLE_3,
         DRIVE_TO_BASKET_4,
         SHOOT_3,
-        INTAKE_ON, 
-        DRIVE_TO_SPIKE_1, 
+        INTAKE_ON,
+        DRIVE_TO_SPIKE_1,
         COMPLETE
     }
 
@@ -69,41 +69,35 @@ public class BlueAuton extends LinearOpMode {
                     break;
 
                 case DRIVE_TO_BASKET_1:
-                    driveToPosition(-980, -882, -1091, -1082, 0.8);
-                    sleep(1000);
+                    driveToPosition(-787, -682, -351, -1059, 0.8);
                     currentState = AutoState.SHOOT_PRELOAD;
                     stateTimer.reset();
                     break;
 
                 case SHOOT_PRELOAD:
-                    shootSequence(1470, 100);
+                    shootSequence(1440, 100);
                     outtakeSubsystem.stop();
                     currentState = AutoState.INTAKE_ON;
                     stateTimer.reset();
                     break;
-                    
+
                 case INTAKE_ON:
-                    intakeSubsystem.run();
-                    outtakeSubsystem.setVelocity(300);
+                    driveToPosition(-1087, -382, -51, -1359, 0.8);
                     currentState = AutoState.DRIVE_TO_SPIKE_1;
                     stateTimer.reset();
                     break;
 
                 case DRIVE_TO_SPIKE_1:
-                    driveToPosition(-437, 1141, -974, 802, 0.7);
+                    driveToPosition(1000, 1000, -1000, -1000, 0.7);
                     stopDriveMotors();
-                    driveToPosition(92, 1675, -444, 1321, 0.7);
+                    driveToPosition(1000, 1000, -1000, -1000, 0.7);
                     stopDriveMotors();
                     currentState = AutoState.DRIVE_TO_BASKET_2;
                     stateTimer.reset();
                     break;
 
-
-
-
-
                 case DRIVE_TO_BASKET_2:
-                    driveToPosition(-980, -882, -1091, -1082, 0.8);
+                    driveToPosition(4, 450, 103, 343, 0.8);
                     stopDriveMotors();
                     currentState = AutoState.SHOOT_SAMPLE_1;
                     stateTimer.reset();
@@ -117,10 +111,10 @@ public class BlueAuton extends LinearOpMode {
                     break;
 
                 case DRIVE_TO_SAMPLE_2:
-                    driveToPosition(-437, 1141, -974, 802, 0.7);
+                    driveToPosition(1000, 1000, -1000, -1000, 0.7);
                     sleep(1500);
-                    driveToPosition(887, 2461, 330, 1565, 0.7);
-                    driveToPosition(1008, 2369, 107, 1675, 0.7);
+                    driveToPosition(1000, 1000, -1000, -1000, 0.7);
+                    driveToPosition(1000, 1000, -1000, -1000, 0.7);
                     stopDriveMotors();
                     currentState = AutoState.INTAKE_SAMPLE_2;
                     stateTimer.reset();
@@ -131,14 +125,14 @@ public class BlueAuton extends LinearOpMode {
                     outtakeSubsystem.setVelocity(300);
                     if (stateTimer.milliseconds() > 1500) {
                         intakeSubsystem.stop();
-                        driveToPosition(887, 2461, 330, 1565, 0.7);
+                        driveToPosition(1000, 1000, -1000, -1000, 0.7);
                         currentState = AutoState.DRIVE_TO_BASKET_3;
                         stateTimer.reset();
                     }
                     break;
 
                 case DRIVE_TO_BASKET_3:
-                    driveToPosition(-880, -482, -991, -682, 0.8);
+                    driveToPosition(4, 450, 103, 343, 0.8);
                     stopDriveMotors();
                     currentState = AutoState.SHOOT_1;
                     stateTimer.reset();
@@ -152,8 +146,8 @@ public class BlueAuton extends LinearOpMode {
                     break;
 
                 case DRIVE_TO_SAMPLE_3:
-                    driveToPosition(-437, 1141, -974, 802, 0.7);
-                    driveToPosition(1738, 3397, 1095, 1765, 0.7);
+                    driveToPosition(1000, 1000, -1000, -1000, 0.7);
+                    driveToPosition(1000, 1000, -1000, -1000, 0.7);
                     stopDriveMotors();
                     currentState = AutoState.INTAKE_SAMPLE_3;
                     stateTimer.reset();
@@ -170,7 +164,7 @@ public class BlueAuton extends LinearOpMode {
                     break;
 
                 case DRIVE_TO_BASKET_4:
-                    driveToPosition(-880, -482, -991, -682, 0.8);
+                    driveToPosition(4, 450, 103, 343, 0.8);
                     stopDriveMotors();
                     currentState = AutoState.SHOOT_3;
                     stateTimer.reset();

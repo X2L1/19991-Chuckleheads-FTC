@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.generated;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "WheelPositionTelemetry", group = "Diagnostic")
 public class DriveWheelPosition extends LinearOpMode {
@@ -13,7 +14,10 @@ public class DriveWheelPosition extends LinearOpMode {
         // Initialize hardware
         hardware = new HydraHardware();
         hardware.init(hardwareMap);
-
+        hardware.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // Wait for the start button
         telemetry.addData("Status", "Ready to run");
         telemetry.update();

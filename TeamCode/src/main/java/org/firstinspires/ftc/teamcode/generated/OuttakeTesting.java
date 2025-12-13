@@ -15,7 +15,8 @@ public class OuttakeTesting extends LinearOpMode {
     private HuskyLensTester huskyLens;
 
     private double targetVelocity = 0.0; // Starting velocity (ticks per second)
-    private double velocityStep = 10.0; // Amount to adjust velocity per button press
+    private double velocityStep = 10.0;
+    private double velocityStep2 = 5.0;// Amount to adjust velocity per button press
 
     private boolean lastDpadLeft = false;
     private boolean lastDpadRight = false;
@@ -62,6 +63,11 @@ public class OuttakeTesting extends LinearOpMode {
             boolean currentDpadRight = gamepad1.dpad_right;
             if (currentDpadRight && !lastDpadRight) {
                 targetVelocity += velocityStep;
+                if(gamepad1.right_trigger > 0.1)
+                {
+                    targetVelocity += velocityStep2;
+                    sleep(100);
+                }
             }
             lastDpadRight = currentDpadRight;
 

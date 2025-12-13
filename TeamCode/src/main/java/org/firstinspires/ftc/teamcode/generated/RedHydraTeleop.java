@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode.generated;
-
-import static org.firstinspires.ftc.teamcode.generated.Utils.sleep;
+import static org.firstinspires.ftc.teamcode.generated.Utils.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name = "BlueHydraTeleOp", group = "TeleOp")
-public class RedHydraTeleOp extends OpMode {
+@TeleOp(name = "RedHydraTeleOp", group = "TeleOp")
+public class RedHydraTeleop extends OpMode {
 
     private HydraHardware hardware;
     private IntakeSubsystem intakeSubsystem;
@@ -88,8 +88,8 @@ public class RedHydraTeleOp extends OpMode {
         // Gamepad2 controls
         // Intake
         if (gamepad2.left_trigger > .1) {
-             intakeSubsystem.run();
-             targetVelocity = 300;
+            intakeSubsystem.run();
+            targetVelocity = 300;
             //HUMAN PLAYER FEEDING MODE
             //targetVelocity = -1000;
 
@@ -145,6 +145,12 @@ public class RedHydraTeleOp extends OpMode {
             // Set RGB lights to aim assist mode
             rgbSubsystem.enableAlignmentAid(-1524, -1524); // Example target coordinates; adjust to actual goal position
             rgbSubsystem.update();
+        }
+        if(gamepad2.psWasPressed())
+        {
+            intakeSubsystem.reverse();
+            sleep(1000);
+            intakeSubsystem.stop();
         }
         else if(currentRGBMode == RGBMode.SHOOTER_STATUS) {
             // Check if target velocity is reached (with tolerance)
