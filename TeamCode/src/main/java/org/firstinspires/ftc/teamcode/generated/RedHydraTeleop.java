@@ -91,7 +91,8 @@ public class RedHydraTeleop extends OpMode {
             //intakeSubsystem.run();
             //targetVelocity = 300;
             //HUMAN PLAYER FEEDING MODE
-            targetVelocity = -1000;
+            targetVelocity = -300;
+            outtakeSubsystem.setVelocity(targetVelocity);
 
         } else {
             intakeSubsystem.stop();

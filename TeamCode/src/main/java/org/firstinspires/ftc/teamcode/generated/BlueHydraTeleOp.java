@@ -88,7 +88,7 @@ public class BlueHydraTeleOp extends OpMode {
         // Gamepad2 controls
         // Intake
         if (gamepad2.right_trigger > .1) {
-            targetVelocity = -600; // Reverse outtake
+            targetVelocity = -600; // +`Reverse outtake
             outtakeSubsystem.setVelocity(targetVelocity);
             //Human-feeding mode
         }
