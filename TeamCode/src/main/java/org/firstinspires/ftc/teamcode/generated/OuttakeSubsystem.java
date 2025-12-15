@@ -53,7 +53,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
     }
     public double redVelocity(HuskyLensTester huskyLensTester)
     {
-        return 6.662*huskyLensTester.getDistance(2) + 1126;
+        return 6.7*huskyLensTester.getDistance(2) + 1126;
     }
 
     // Set shooter angle (assuming both servos move together; adjust if one needs inversion)

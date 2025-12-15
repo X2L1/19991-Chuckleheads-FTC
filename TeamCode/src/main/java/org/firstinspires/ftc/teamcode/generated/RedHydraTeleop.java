@@ -88,10 +88,10 @@ public class RedHydraTeleop extends OpMode {
         // Gamepad2 controls
         // Intake
         if (gamepad2.left_trigger > .1) {
-            intakeSubsystem.run();
-            targetVelocity = 300;
+            //intakeSubsystem.run();
+            //targetVelocity = 300;
             //HUMAN PLAYER FEEDING MODE
-            //targetVelocity = -1000;
+            targetVelocity = -1000;
 
         } else {
             intakeSubsystem.stop();

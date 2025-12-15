@@ -87,11 +87,15 @@ public class BlueHydraTeleOp extends OpMode {
 
         // Gamepad2 controls
         // Intake
+        if (gamepad2.right_trigger > .1) {
+            targetVelocity = -600; // Reverse outtake
+            outtakeSubsystem.setVelocity(targetVelocity);
+            //Human-feeding mode
+        }
         if (gamepad2.left_trigger > .1) {
              intakeSubsystem.run();
              targetVelocity = 300;
-            //HUMAN PLAYER FEEDING MODE
-            //targetVelocity = -1000;
+            outtakeSubsystem.setVelocity(targetVelocity);
 
         } else {
             intakeSubsystem.stop();
@@ -100,7 +104,8 @@ public class BlueHydraTeleOp extends OpMode {
 
         if(gamepad2.right_trigger == 0 && gamepad2.left_trigger == 0)
         {
-            targetVelocity = 0; //Stop outtake
+            targetVelocity = 0;
+            outtakeSubsystem.setVelocity(targetVelocity);//Stop outtake
         }
 
 
@@ -159,9 +164,9 @@ public class BlueHydraTeleOp extends OpMode {
 
             if (velocityReached) {
                 // Flash rainbow when velocity reached
-                rgbSubsystem.setColor(hardware.leftRGB, "indigo");
-                rgbSubsystem.setColor(hardware.centerRGB, "indigo");
-                rgbSubsystem.setColor(hardware.rightRGB, "indigo");
+                rgbSubsystem.setColor(hardware.leftRGB, "green");
+                rgbSubsystem.setColor(hardware.centerRGB, "green");
+                rgbSubsystem.setColor(hardware.rightRGB, "green");
 
                 rgbSubsystem.update(); // This will run the rainbow flashing
             } else {
@@ -194,15 +199,13 @@ public class BlueHydraTeleOp extends OpMode {
             }
         }
         else if(shooterMode == ShooterMode.CLOSE_ZONE){
-            if(gamepad2.right_trigger > .2)
-            {
+            if(gamepad2.right_trigger > .2) {
                 targetVelocity = outtakeSubsystem.blueVelocity(huskyLens); // Close zone velocity
             }
-            if(gamepad2.y){
-                shooterMode = ShooterMode.FAR_ZONE;
-            }
         }
-
+        if(gamepad2.y){
+            targetVelocity = -600;
+        }
         // Telemetry
         //telemetry.addData("Heading Lock", headingLockEnabled ? "Enabled" : "Disabled");
         telemetry.addData("Current Heading", hardware.pinpoint.getPosition().getHeading(AngleUnit.DEGREES));
