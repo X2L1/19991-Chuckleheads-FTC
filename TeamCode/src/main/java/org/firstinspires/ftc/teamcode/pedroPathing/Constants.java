@@ -23,7 +23,7 @@ public class Constants {
             .centripetalScaling(0.005);
     public static MecanumConstants mecanumConstants = new MecanumConstants()
             .useBrakeModeInTeleOp(true)
-            .xVelocity(78.66620834230437)
+            .xVelocity(78.0834129513718)
             .yVelocity(61.54)
             .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
