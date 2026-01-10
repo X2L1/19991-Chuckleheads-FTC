@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.generated;
+package org.firstinspires.ftc.teamcode.Hydra;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static org.firstinspires.ftc.teamcode.generated.Utils.sleep;
+import static org.firstinspires.ftc.teamcode.Hydra.Utils.sleep;
 
 @Autonomous(name = "RedAuton", group = "Autonomous")
 public class RedAuton extends LinearOpMode {

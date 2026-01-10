@@ -1,14 +1,9 @@
-package org.firstinspires.ftc.teamcode.generated;
+package org.firstinspires.ftc.teamcode.Hydra;
 
 import com.bylazar.configurables.annotations.Configurable;
-import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-
 
 
 @Configurable public class OuttakeSubsystem {

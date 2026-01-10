@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.generated;
+package org.firstinspires.ftc.teamcode.Hydra;
 import com.bylazar.configurables.annotations.Configurable;
 @Configurable
 public class PIDFCoefficients {

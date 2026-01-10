@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.generated;
-import static org.firstinspires.ftc.teamcode.generated.Utils.*;
+package org.firstinspires.ftc.teamcode.Hydra;
+import static org.firstinspires.ftc.teamcode.Hydra.Utils.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name = "BlueHydraTeleOp", group = "TeleOp")
@@ -87,11 +86,7 @@ public class BlueHydraTeleOp extends OpMode {
 
         // Gamepad2 controls
         // Intake
-        if (gamepad2.right_trigger > .1) {
-            targetVelocity = -600; // +`Reverse outtake
-            outtakeSubsystem.setVelocity(targetVelocity);
-            //Human-feeding mode
-        }
+
         if (gamepad2.left_trigger > .1) {
              intakeSubsystem.run();
              targetVelocity = 300;
@@ -191,7 +186,7 @@ public class BlueHydraTeleOp extends OpMode {
         if(shooterMode == ShooterMode.FAR_ZONE){
             if(gamepad2.right_trigger > .2)
             {
-                targetVelocity = outtakeSubsystem.blueVelocity(huskyLens); // Far zone velocity
+                targetVelocity = 1800; // Far zone velocity
             }
 
             if(gamepad2.y){
@@ -200,7 +195,9 @@ public class BlueHydraTeleOp extends OpMode {
         }
         else if(shooterMode == ShooterMode.CLOSE_ZONE){
             if(gamepad2.right_trigger > .2) {
-                targetVelocity = outtakeSubsystem.blueVelocity(huskyLens); // Close zone velocity
+                targetVelocity = 1800;
+
+                // Close zone velocity
             }
         }
         if(gamepad2.y){
