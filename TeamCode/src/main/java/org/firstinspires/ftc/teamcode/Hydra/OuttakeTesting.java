@@ -4,6 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.IMU;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
 @TeleOp(name = "OuttakeVelocityTest", group = "Test")
 public class OuttakeTesting extends LinearOpMode {
@@ -12,7 +18,9 @@ public class OuttakeTesting extends LinearOpMode {
     private OuttakeSubsystem outtakeSubsystem;
     private IndexerSubsystem indexerSubsystem;
     private OdometryUtils odometryUtils;
-    private HuskyLensTester huskyLens;
+    //private HuskyLensTester huskyLens;
+    private Limelight3A limelight;
+    private IMU imu;
 
     private double targetVelocity = 0.0; // Starting velocity (ticks per second)
     private double velocityStep = 10.0;
@@ -31,10 +39,16 @@ public class OuttakeTesting extends LinearOpMode {
         // Initialize hardware and subsystems
         hardware = new HydraHardware();
         hardware.init(hardwareMap);
-        huskyLens = new HuskyLensTester(hardware.huskyLens);
+        //huskyLens = new HuskyLensTester(hardware.huskyLens);
         outtakeSubsystem = new OuttakeSubsystem(hardware);
         indexerSubsystem = new IndexerSubsystem(hardware);
         odometryUtils = new OdometryUtils(hardware.pinpoint);
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight.pipelineSwitch(0);
+        imu = hardwareMap.get(IMU.class, "imu");
+        RevHubOrientationOnRobot revHubOrientationOnRobot = new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
+        imu.initialize(new IMU.Parameters(revHubOrientationOnRobot));
+        limelight.start();
 
         // Set shooter motors to velocity control mode
         hardware.outtakeLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -51,6 +65,19 @@ public class OuttakeTesting extends LinearOpMode {
 
         while (opModeIsActive()) {
             odometryUtils.update(); // Update odometry for position telemetry
+            YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+            limelight.updateRobotOrientation(orientation.getYaw());
+            LLResult llresult = limelight.getLatestResult();
+            if(llresult != null && llresult.isValid())
+            {
+                Pose3D botpose = llresult.getBotpose();
+                telemetry.addData("tx",llresult.getTx());
+                telemetry.addData("ty",llresult.getTy());
+                telemetry.addData("ta",llresult.getTa());
+                telemetry.addData("bot pose",botpose.toString());
+                double distance = (29.5 - 13.25) / Math.tan(Math.toRadians(llresult.getTy()));
+                telemetry.addData("dist", distance);
+            }
 
             // Adjust target velocity with dpad left/right (debounced)
             boolean currentDpadLeft = gamepad1.dpad_left;
@@ -94,7 +121,7 @@ public class OuttakeTesting extends LinearOpMode {
             telemetry.addData("Actual Velocity (Center)", "%.0f ticks/s", hardware.outtakeCenter.getVelocity());
             telemetry.addData("Robot Pose", odometryUtils.getPose().toString());
             telemetry.addData("Distance from goal", "%.2f mm", odometryUtils.getDistanceFromPoint(3352.8, 1524)); // Example goal position
-            telemetry.addData("Distance from tag: %2f", huskyLens.getDistance(1));
+            //telemetry.addData("Distance from tag: %2f", huskyLens.getDistance(1));
             telemetry.update();
         }
 
