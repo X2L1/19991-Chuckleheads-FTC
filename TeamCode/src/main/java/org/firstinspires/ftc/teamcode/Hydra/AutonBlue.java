@@ -24,7 +24,7 @@ public class AutonBlue extends OpMode {
     public IndexerSubsystem indexerSubsystem;
     public HydraHardware hydraHardware;
     private Timer pathTimer, opModeTimer;// Current autonomous path state (state machine)
-    private Paths paths; // Paths defined in the Paths class
+
     public enum PathState {
         START_TO_SHOOT,
 
