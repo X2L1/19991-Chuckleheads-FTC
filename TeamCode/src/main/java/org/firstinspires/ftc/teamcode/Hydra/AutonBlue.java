@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Hydra;
 import static org.firstinspires.ftc.teamcode.Hydra.Utils.sleep;
 
+import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -15,9 +16,9 @@ import com.pedropathing.paths.PathChain;
 import com.pedropathing.geometry.Pose;
 
 
-@Autonomous(name = "Pedro Pathing Autonomous Blue", group = "Autonomous")
+@Autonomous(name = "Pedro Pathing Autonomous Red", group = "Autonomous")
 @Configurable // Panels
-public class AutonBlue extends OpMode {
+public class AutonRed extends OpMode {
     private TelemetryManager panelsTelemetry; // Panels Telemetry instance
     public Follower follower; // Pedro Pathing follower instance
     public OuttakeSubsystem outtakeSubsystem;
@@ -59,7 +60,7 @@ public class AutonBlue extends OpMode {
 
     private final Pose intake1 = new Pose(15.182866556836903, 14.708401976935736, Math.toRadians(90));
     private final Pose intake2 = new Pose(22.069192751235576, 56.39538714991763,
-    Math.toRadians(90));
+            Math.toRadians(90));
     private final Pose intake3 = new Pose(27.056013179571668, 81.82537067545306, Math.toRadians(90));
     private final Pose park = new Pose(73.81054365733115, 93.53871499176277, Math.toRadians(90));
 
@@ -86,25 +87,25 @@ public class AutonBlue extends OpMode {
                 .setLinearHeadingInterpolation(startPose.getHeading(), shootPose.getHeading())
                 .build();
         shootToIntake1 = follower.pathBuilder().addPath(
-                        new BezierLine(
-                                shootPose, intake1
-                )
+                        new BezierCurve(
+                                shootPose, new Pose(55.333, 11.578), intake1
+                        )
                 )
                 .setLinearHeadingInterpolation(startPose.getHeading(), shootPose.getHeading())
 
                 .build();
         intake1ToShoot = follower.pathBuilder().addPath(
-                        new BezierLine(
-                                intake1, shootPose
-                )
+                        new BezierCurve(
+                                intake1, new Pose(43.381, 68.002), shootPose
+                        )
                 )
                 .setLinearHeadingInterpolation(startPose.getHeading(), shootPose.getHeading())
 
                 .build();
         shootToIntake2 = follower.pathBuilder().addPath(
-                        new BezierLine(
-                                shootPose, intake2
-                )
+                        new BezierCurve(
+                                shootPose, new Pose(38.756, 16.013), intake2
+                        )
                 )
                 .setLinearHeadingInterpolation(startPose.getHeading(), shootPose.getHeading())
 
@@ -117,8 +118,8 @@ public class AutonBlue extends OpMode {
 
                 .build();
         shootToIntake3 = follower.pathBuilder().addPath(
-                        new BezierLine(
-                                shootPose, intake3)
+                        new BezierCurve(
+                                shootPose, new Pose(12.315, 59.404), intake3)
                 )
                 .setLinearHeadingInterpolation(startPose.getHeading(), shootPose.getHeading())
 
