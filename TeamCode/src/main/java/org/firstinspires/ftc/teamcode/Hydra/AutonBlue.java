@@ -248,7 +248,11 @@ public class AutonBlue extends OpMode {
         pathTimer = new Timer();
         opModeTimer = new Timer();
         hydraHardware = new HydraHardware();
-hydraHardware.init(hardwareMap);
+        hydraHardware.init(hardwareMap);
+        intakeSubsystem = new IntakeSubsystem(hydraHardware);
+        outtakeSubsystem = new OuttakeSubsystem(hydraHardware);
+        indexerSubsystem = new IndexerSubsystem(hydraHardware);
+
         follower = Constants.createFollower(hardwareMap); // Create Pedro Pathing follower
 
         buildPaths(); // Build paths
