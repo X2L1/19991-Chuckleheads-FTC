@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode.Hydra;
+import static org.firstinspires.ftc.teamcode.Hydra.Utils.sleep;
+
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -154,6 +156,7 @@ public class AutonBlue extends OpMode {
             case SHOOT_0:
                 if (!follower.isBusy()) {
                     indexerSubsystem.kickAll();
+                    sleep(200);
                 }
                 break;
             case SHOOT_TO_INTAKE:
@@ -173,6 +176,7 @@ public class AutonBlue extends OpMode {
             case SHOOT_1:
                 if (!follower.isBusy()) {
                     indexerSubsystem.kickAll();
+                    sleep(200);
                     setPathState(PathState.SHOOT_TO_INTAKE2);
                 }
                 break;
@@ -194,6 +198,7 @@ public class AutonBlue extends OpMode {
             case SHOOT_2:
                 if (!follower.isBusy()) {
                     indexerSubsystem.kickAll();
+                    sleep(200);
                     setPathState(PathState.SHOOT_TO_INTAKE3);
                 }
                 break;
@@ -213,6 +218,7 @@ public class AutonBlue extends OpMode {
             case SHOOT_3:
                 if (!follower.isBusy()) {
                     indexerSubsystem.kickAll();
+                    sleep(200);
                     setPathState(PathState.SHOOT_T0_PARK);
                 }
                 break;
