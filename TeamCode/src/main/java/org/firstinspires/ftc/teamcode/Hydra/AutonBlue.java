@@ -247,7 +247,8 @@ public class AutonBlue extends OpMode {
         pathState = PathState.START_TO_SHOOT; // Initialize path state
         pathTimer = new Timer();
         opModeTimer = new Timer();
-
+        hydraHardware = new HydraHardware();
+hydraHardware.init(hardwareMap);
         follower = Constants.createFollower(hardwareMap); // Create Pedro Pathing follower
 
         buildPaths(); // Build paths
