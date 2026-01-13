@@ -3,13 +3,17 @@ package org.firstinspires.ftc.teamcode.V2.subsystems;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.pedropathing.math.Vector;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+
+import java.util.List;
 
 
 public class LimelightSubsystem extends SubsystemBase {
@@ -28,19 +32,7 @@ public class LimelightSubsystem extends SubsystemBase {
     public Pose3D getPose() {
         return getResult().getBotpose();
     }
-    public double getDistanceToTarget() {
-        LLResult result = getResult();
-            double ty = result.getTy();
-            // Calculate distance using the formula
-            double h1 = 24; // height of limelight in inches
-            double h2 = 104; // height of target in inches
-            double a1 = 20; // mounting angle of limelight in degrees
-            double a2 = ty; // vertical offset angle to target in degrees
 
-            double distance = (h2 - h1) / Math.tan(Math.toRadians(a1 + a2));
-            return distance;
-
-    }
     public double getTy() {
         LLResult result = getResult();
         return result.getTy();
@@ -52,5 +44,30 @@ public class LimelightSubsystem extends SubsystemBase {
     public boolean hasTarget() {
         LLResult result = getResult();
         return result.isValid();
+    }
+    public double distanceFromTag(double tagID) {
+
+        List<LLResultTypes.FiducialResult> fiducialResultList = limelight.getLatestResult().getFiducialResults();
+
+        if (fiducialResultList.isEmpty()) return 0;
+
+        LLResultTypes.FiducialResult target = null;
+        for (LLResultTypes.FiducialResult tagResult: fiducialResultList) {
+            if (tagResult != null && tagResult.getFiducialId() ==  tagID) {
+                target = tagResult;
+                break;
+            }
+        }
+
+        if (target != null) {
+            double x = (target.getCameraPoseTargetSpace().getPosition().x / DistanceUnit.mPerInch) + 8; // right/left from tag
+            double z = (target.getCameraPoseTargetSpace().getPosition().z / DistanceUnit.mPerInch) + 8; // forward/back from tag
+
+            Vector e = new Vector();
+            e.setOrthogonalComponents(x, z);
+            return e.getMagnitude();
+        }
+
+        return 0;
     }
 }

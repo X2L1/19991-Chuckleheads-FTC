@@ -26,6 +26,7 @@ public class AutonBlue extends OpMode {
     public IntakeSubsystem intakeSubsystem;
     public IndexerSubsystem indexerSubsystem;
     public HydraHardware hydraHardware;
+    public MecanumChassis mecanumChassis;
     private Timer pathTimer, opModeTimer;// Current autonomous path state (state machine)
 
     public enum PathState {
@@ -252,6 +253,7 @@ public class AutonBlue extends OpMode {
         intakeSubsystem = new IntakeSubsystem(hydraHardware);
         outtakeSubsystem = new OuttakeSubsystem(hydraHardware);
         indexerSubsystem = new IndexerSubsystem(hydraHardware);
+        mecanumChassis = new MecanumChassis(hydraHardware);
 
         follower = Constants.createFollower(hardwareMap); // Create Pedro Pathing follower
 
