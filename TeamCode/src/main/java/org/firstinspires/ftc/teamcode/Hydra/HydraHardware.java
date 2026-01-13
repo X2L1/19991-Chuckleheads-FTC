@@ -56,10 +56,10 @@ public class HydraHardware {
 
     public void init(HardwareMap hardwareMap) {
         // Initialize drive motors
-        leftFront = hardwareMap.get(DcMotorEx.class, "frontLeft");
-        rightFront = hardwareMap.get(DcMotorEx.class, "frontRight");
-        leftRear = hardwareMap.get(DcMotorEx.class, "backLeft");
-        rightRear = hardwareMap.get(DcMotorEx.class, "backRight");
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
 
         // Set directions for mecanum drive (adjust as needed based on robot configuration)
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);

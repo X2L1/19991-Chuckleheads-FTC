@@ -78,11 +78,10 @@ public class IndexerSubsystem {
 
     // Kick all chambers regardless of color
     public void kickAll() {
-        for (int i = 0; i < 3; i++) {
-            kickChamber(i);
-        }
+        kickChamber(1);
+        kickChamber(3);
+        chamberServos[2].setPosition(.9);
     }
-
     // Kick only chambers with purple artifacts
     public void kickPurple() {
         for (int i = 0; i < 3; i++) {
