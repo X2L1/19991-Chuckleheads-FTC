@@ -41,6 +41,11 @@ public class LimelightSubsystem extends SubsystemBase {
         LLResult result = getResult();
         return result.getTx();
     }
+    public double getXDegrees(int tagID)
+    {
+        LLResultTypes.FiducialResult detection = limelight.getLatestResult().getFiducialResults().get(tagID);
+        return detection.getTargetXDegrees();
+    }
     public boolean hasTarget() {
         LLResult result = getResult();
         return result.isValid();

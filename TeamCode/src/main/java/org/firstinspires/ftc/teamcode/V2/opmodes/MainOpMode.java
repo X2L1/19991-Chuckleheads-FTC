@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.V2.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.skeletonarmy.marrow.prompts.BooleanPrompt;
 import com.skeletonarmy.marrow.prompts.OptionPrompt;
 import com.skeletonarmy.marrow.prompts.Prompter;
@@ -9,7 +10,7 @@ import com.skeletonarmy.marrow.prompts.ValuePrompt;
 
 import org.firstinspires.ftc.teamcode.V2.utils.Alliance;
 
-@Autonomous
+@TeleOp
 public class MainOpMode extends OpMode {
 
 

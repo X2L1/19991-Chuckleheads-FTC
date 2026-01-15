@@ -1,39 +1,45 @@
 package org.firstinspires.ftc.teamcode.V2.commands;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
 
-import com.arcrobotics.ftclib.command.CommandBase;
+import static org.firstinspires.ftc.teamcode.V2.utils.Alliance.*;
 
+import com.arcrobotics.ftclib.command.InstantCommand;
+
+import org.firstinspires.ftc.teamcode.V2.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.V2.subsystems.LimelightSubsystem;
+import org.firstinspires.ftc.teamcode.V2.subsystems.OuttakeSubsystem;
+import org.firstinspires.ftc.teamcode.V2.subsystems.TransferSubsystem;
 import org.firstinspires.ftc.teamcode.V2.subsystems.TurretSubsystem;
+import org.firstinspires.ftc.teamcode.V2.utils.Alliance;
+import org.firstinspires.ftc.teamcode.V2.utils.OuttakeLUTs;
 
 
-public class AimTurret extends CommandBase {
+public class AimTurret extends InstantCommand {
 
     // The subsystem the command runs on
     private final TurretSubsystem turret;
     private final LimelightSubsystem limelight;
-    public AimTurret(TurretSubsystem turret, LimelightSubsystem limelight) {
+    Alliance alliance = BLUE;
+    public AimTurret(TurretSubsystem turret, LimelightSubsystem limelight, Alliance alliance) {
         this.turret = turret;
         this.limelight = limelight;
+        this.alliance = alliance;
+
         addRequirements(turret, limelight);
     }
 
+
     @Override
     public void execute() {
-        if(limelight.hasTarget() == false || gamepad2.left_trigger > 0.1)
+        if(alliance == BLUE)
         {
-            turret.aimAtGoal(gamepad2.right_stick_x, gamepad2.right_stick_x);
+            turret.rotate(limelight.getXDegrees(20));
         }
-        else
+        else if(alliance == RED)
         {
-            turret.aimAtGoal(limelight.getTx(), 0.3);
+            turret.rotate(limelight.getXDegrees(24));
         }
 
     }
 
-    @Override
-    public boolean isFinished() {
-        return true;
-    }
 
 }

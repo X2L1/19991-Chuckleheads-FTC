@@ -9,7 +9,6 @@ public class Configurables {
     public static double outtakeD = 0.0;
     public static double outtakeF = 0.0;
 
-    public static double turretP = 0.0;
-    public static double turretTolerance = 5.0;
+    public static double turretP = 0.001;
 
 }
