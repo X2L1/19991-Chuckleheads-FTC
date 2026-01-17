@@ -26,4 +26,7 @@ public class DriveSubsystem extends SubsystemBase {
 
         drive.driveRobotCentric(forward, strafe, rotate);
     }
+    public void stop() {
+        drive.stop();
+    }
 }
