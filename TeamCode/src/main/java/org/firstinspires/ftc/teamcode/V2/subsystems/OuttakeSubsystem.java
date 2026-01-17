@@ -12,12 +12,15 @@ public class OuttakeSubsystem extends SubsystemBase {
 
     private final DcMotorEx outtakeLeft;
     private final DcMotorEx outtakeRight;
-    private final Servo hood;
+    private final Servo leftHood;
+    private final Servo rightHood;
 
     public OuttakeSubsystem(final HardwareMap hMap) {
         outtakeLeft = hMap.get(DcMotorEx.class, "outtakeLeft");
         outtakeRight = hMap.get(DcMotorEx.class, "outtakeRight");
-        hood = hMap.get(Servo.class, "hood");
+        rightHood = hMap.get(Servo.class, "rightHood");
+        leftHood = hMap.get(Servo.class, "leftHood");
+        leftHood.setDirection(Servo.Direction.REVERSE);
         outtakeLeft.setVelocityPIDFCoefficients(Configurables.outtakeP, Configurables.outtakeI, Configurables.outtakeD, Configurables.outtakeF);
         outtakeRight.setVelocityPIDFCoefficients(Configurables.outtakeP, Configurables.outtakeI, Configurables.outtakeD, Configurables.outtakeF);
     }
@@ -29,7 +32,8 @@ public class OuttakeSubsystem extends SubsystemBase {
     }
     public void setHoodAngle(double angle)
     {
-        hood.setPosition(angle);
+        rightHood.setPosition(angle);
+        leftHood.setPosition(angle);
     }
 
 
