@@ -11,23 +11,20 @@ import com.qualcomm.robotcore.hardware.ServoControllerEx;
 import org.firstinspires.ftc.teamcode.V2.utils.Configurables;
 
 public class TurretSubsystem extends SubsystemBase {
-    private final Servo leftServo;
-    private final Servo rightServo;
+    private final CRServo leftServo;
+    private final CRServo rightServo;
 
-    // Constants (tune based on testing)
-    private double maxPositionClockwise = 1.0; // Max servo position clockwise
-    private double maxPositionCounterClockwise = 0.0; // Max servo position counter
 
     public TurretSubsystem(HardwareMap hardwareMap) {
-        leftServo = hardwareMap.get(Servo.class, "leftTurretServo");
-        rightServo = hardwareMap.get(Servo.class, "rightTurretServo");
+        leftServo = hardwareMap.get(CRServo.class, "leftTurret");
+        rightServo = hardwareMap.get(CRServo.class, "rightTurret");
     }
     public void rotate(double power)
     {
-        setTargetPositions(power*Configurables.turretP);
+        setTargetPower(power);
     }
-    public void setTargetPositions(double desiredAngle) {
-        leftServo.setPosition(desiredAngle);
-        rightServo.setPosition(desiredAngle);
+    public void setTargetPower(double power) {
+        leftServo.setPower(power);
+        rightServo.setPower(power);
     }
 }

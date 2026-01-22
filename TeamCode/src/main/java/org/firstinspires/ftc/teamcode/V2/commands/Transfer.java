@@ -1,25 +1,26 @@
 package org.firstinspires.ftc.teamcode.V2.commands;
 
-import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.V2.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.V2.subsystems.TransferSubsystem;
 
+public class Transfer extends CommandBase {
 
-public class Transfer extends InstantCommand {
-
-    // The subsystem the command runs on
     private final TransferSubsystem transfer;
     private final IntakeSubsystem intake;
+    private long startTime;
+
     public Transfer(IntakeSubsystem intake, TransferSubsystem transfer) {
         this.transfer = transfer;
         this.intake = intake;
         addRequirements(intake, transfer);
     }
-    public Transfer(TransferSubsystem transfer, IntakeSubsystem intake) {
-        this.transfer = transfer;
-        this.intake = intake;
-        addRequirements(intake, transfer);
+
+    @Override
+    public void initialize() {
+        startTime = System.currentTimeMillis();
     }
 
     @Override
@@ -28,5 +29,14 @@ public class Transfer extends InstantCommand {
         transfer.run();
     }
 
+    @Override
+    public boolean isFinished() {
+        return System.currentTimeMillis() - startTime > 500; // Timeout after 0.5s to prevent over-run
+    }
 
+    @Override
+    public void end(boolean interrupted) {
+        intake.stop();
+        transfer.stop();
+    }
 }

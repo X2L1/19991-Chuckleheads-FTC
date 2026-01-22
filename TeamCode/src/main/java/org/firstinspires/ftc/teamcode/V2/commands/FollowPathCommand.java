@@ -18,20 +18,23 @@ public class FollowPathCommand extends CommandBase {
         addRequirements(drive);
     }
 
+    @Override
+    public void initialize() {
+        follower.followPath(pathChain); // Start following only once
+    }
 
     @Override
     public void execute() {
-        follower.followPath(pathChain);
         follower.update();
     }
 
     @Override
     public boolean isFinished() {
-        return !follower.isBusy();
+        return !follower.isBusy(); // Use correct method from Pedro Pathing
     }
 
     @Override
     public void end(boolean interrupted) {
-        drive.stop(); // Stop the robot when the command ends
+        drive.stop();
     }
 }

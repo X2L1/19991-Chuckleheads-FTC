@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.V2.utils;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.skeletonarmy.marrow.zones.Point;
 import com.skeletonarmy.marrow.zones.PolygonZone;
 
@@ -14,19 +13,24 @@ public class ZoneUtils {
     private final PolygonZone farLaunchZone = new PolygonZone(new Point(48, 0), new Point(72, 24), new Point(96, 0));
     private final PolygonZone robotZone = new PolygonZone(17, 17);
     private Follower follower;
-    public void initZone()
-    {
-        follower = Constants.createFollower(hardwareMap);
-        follower.startTeleopDrive(true);
-        follower.setStartingPose(new Pose(72, 72));
+    private final HardwareMap hMap;
+
+    public ZoneUtils(HardwareMap hMap) {
+        this.hMap = hMap;
     }
-    public void syncZonesWithPositions()
-    {
+
+    public void initZone() {
+        follower = Constants.createFollower(hMap);
+        follower.startTeleopDrive(true);
+        follower.setStartingPose(new Pose(72, 72, 0)); // Adjust based on prompts
+    }
+
+    public void syncZonesWithPositions() {
         robotZone.setPosition(follower.getPose().getX(), follower.getPose().getY());
         robotZone.setRotation(follower.getPose().getHeading());
     }
-    public boolean isInsideLaunchZone()
-    {
+
+    public boolean isInsideLaunchZone() {
         return robotZone.isInside(closeLaunchZone) || robotZone.isInside(farLaunchZone);
     }
 }
