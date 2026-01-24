@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.V2.commands;
 
-import static org.firstinspires.ftc.teamcode.V2.utils.Alliance.*;
-
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -22,7 +20,7 @@ public class AutoShoot extends ParallelCommandGroup {
         this.alliance = alliance;
         this.robot = new Robot(hMap);
         this.zoneUtils = new ZoneUtils(hMap);
-        zoneUtils.initZone(); // Initialize zones
+        zoneUtils.initZone();
 
         aimTurret = new AimTurret(robot.turret, robot.limelight, alliance);
         transfer = new Transfer(robot.intake, robot.transfer);
@@ -35,10 +33,10 @@ public class AutoShoot extends ParallelCommandGroup {
     @Override
     public void execute() {
         zoneUtils.syncZonesWithPositions(); // Sync every tick
-        aimTurret.execute();
+        aimTurret.execute(); // Respects manualOverride (false in auto)
         setOuttakeVelocity.execute();
         if (zoneUtils.isInsideLaunchZone() && robot.limelight.hasTarget() && !transfer.isScheduled()) {
-            transfer.schedule(); // Schedule conditionally to avoid repeats
+            transfer.schedule();
         }
     }
 }

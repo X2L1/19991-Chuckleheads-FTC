@@ -7,12 +7,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class RGBSubsystem extends SubsystemBase {
 
-    private final Servo leftRGB;
-    private final Servo rightRGB;
+    private final Servo rgb;
 
     public RGBSubsystem(final HardwareMap hMap) {
-        leftRGB = hMap.get(Servo.class, "intakeRGB");
-        rightRGB = hMap.get(Servo.class, "outtakeRGB");
+        rgb = hMap.get(Servo.class, "RGB");
     }
     private enum colors{
         RED,
@@ -56,8 +54,7 @@ public class RGBSubsystem extends SubsystemBase {
     }
 
     public void stop() {
-        leftRGB.setPosition(0);
-        rightRGB.setPosition(0);
+        rgb.setPosition(0);
     }
 
 }

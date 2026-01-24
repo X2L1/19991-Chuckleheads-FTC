@@ -43,7 +43,7 @@ public class MainOpMode extends LinearOpMode {
         Alliance alliance = prompter.get("alliance");
         StartingLocation startPos = prompter.get("startpos");
 
-        // Example: Schedule teleop command
+        // Schedule teleop with both gamepads
         new RunTeleOp(alliance, hardwareMap, new GamepadEx(gamepad1), new GamepadEx(gamepad2)).schedule();
 
         telemetry.addData("Selected Alliance", alliance);
