@@ -16,6 +16,8 @@ public class DriveSubsystem extends SubsystemBase {
     private MecanumDrive drive;
     private GamepadEx driverOp;
     public DriveSubsystem(final HardwareMap hMap) {
+        frontLeft.setInverted(true);
+        frontRight.setInverted(true);
         drive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
         driverOp = new GamepadEx(gamepad1);
     }
