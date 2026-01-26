@@ -18,8 +18,10 @@ public class TeleOpTesting extends LinearOpMode {
     public void runOpMode() {
         robot = new Robot(hardwareMap);
 
-        // Assuming default alliance as BLUE; adjust if needed or integrate Prompter
-        runTeleOp = new RunTeleOp(Alliance.BLUE, hardwareMap, new GamepadEx(gamepad1), new GamepadEx(gamepad2));
+        GamepadEx driver = new GamepadEx(gamepad1); // Fix: Explicit init
+        GamepadEx gunner = new GamepadEx(gamepad2);
+
+        runTeleOp = new RunTeleOp(Alliance.BLUE, hardwareMap, driver, gunner);
 
         telemetry.addData("Status", "Ready for TeleOp testing");
         telemetry.update();
@@ -31,6 +33,6 @@ public class TeleOpTesting extends LinearOpMode {
             telemetry.update();
         }
 
-        runTeleOp.end(false); // Clean up on end
+        runTeleOp.end(false);
     }
 }

@@ -20,9 +20,9 @@ public class ZoneUtils {
     }
 
     public void initZone() {
-        follower = Constants.createFollower(hMap);
+        follower = Constants.createFollower(hMap); // Now hMap is non-null
         follower.startTeleopDrive(true);
-        follower.setStartingPose(new Pose(72, 72, 0)); // Adjust based on prompts
+        follower.setStartingPose(new Pose(72, 72, 0));
     }
 
     public void syncZonesWithPositions() {

@@ -18,8 +18,8 @@ public class AutoShoot extends ParallelCommandGroup {
 
     public AutoShoot(Alliance alliance, HardwareMap hMap) {
         this.alliance = alliance;
-        this.robot = new Robot(hMap);
-        this.zoneUtils = new ZoneUtils(hMap);
+        this.robot = new Robot(hMap); // Pass HardwareMap
+        this.zoneUtils = new ZoneUtils(hMap); // Pass HardwareMap
         zoneUtils.initZone();
 
         aimTurret = new AimTurret(robot.turret, robot.limelight, alliance);
@@ -32,8 +32,8 @@ public class AutoShoot extends ParallelCommandGroup {
 
     @Override
     public void execute() {
-        zoneUtils.syncZonesWithPositions(); // Sync every tick
-        aimTurret.execute(); // Respects manualOverride (false in auto)
+        zoneUtils.syncZonesWithPositions();
+        aimTurret.execute();
         setOuttakeVelocity.execute();
         if (zoneUtils.isInsideLaunchZone() && robot.limelight.hasTarget() && !transfer.isScheduled()) {
             transfer.schedule();

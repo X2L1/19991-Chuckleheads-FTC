@@ -13,19 +13,16 @@ public class TurretKpTuningOpMode extends LinearOpMode {
     private Robot robot;
     private GamepadEx gunner;
 
-    // Tuning parameters
-    private double kP = 0.012;                    // ← Start here (good default for CRServo + Limelight)
+    private double kP = 0.012;
     private static final double KP_STEP_COARSE = 0.002;
-    private static final double KP_STEP_FINE   = 0.0005;
-    private static final int   TAG_ID          = 20;   // Blue Goal; change to 24 for red
-
-    // Manual override
+    private static final double KP_STEP_FINE = 0.0005;
+    private static final int TAG_ID = 20;
     private static final double MANUAL_DEADZONE = 0.12;
 
     @Override
     public void runOpMode() {
         robot = new Robot(hardwareMap);
-        gunner = new GamepadEx(gamepad2);
+        gunner = new GamepadEx(gamepad2); // Fix: Explicit init from gamepad2
 
         telemetry.addLine("=== Turret kP Tuning ===");
         telemetry.addLine("D-Pad Up/Down → Coarse kP (±0.002)");
@@ -37,15 +34,15 @@ public class TurretKpTuningOpMode extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            // ── kP Adjustment ─────────────────────────────────────────────────
-            if (gamepad1.dpad_up)   kP += KP_STEP_COARSE;
+            gunner.readButtons(); // Fix: Update state each loop
+
+            if (gamepad1.dpad_up) kP += KP_STEP_COARSE;
             if (gamepad1.dpad_down) kP -= KP_STEP_COARSE;
-            if (gamepad1.dpad_right)kP += KP_STEP_FINE;
+            if (gamepad1.dpad_right) kP += KP_STEP_FINE;
             if (gamepad1.dpad_left) kP -= KP_STEP_FINE;
 
-            kP = Math.max(0.0, Math.min(0.12, kP));   // Reasonable bounds
+            kP = Math.max(0.0, Math.min(0.12, kP));
 
-            // ── Turret Control Logic ─────────────────────────────────────────
             double turretPower = 0.0;
             boolean manualActive = false;
 
@@ -55,15 +52,13 @@ public class TurretKpTuningOpMode extends LinearOpMode {
                 turretPower = manualInput;
             } else if (robot.limelight.hasTarget()) {
                 double offset = robot.limelight.getXDegrees(TAG_ID);
-                turretPower = kP * offset;               // Core P term
-                // Optional: add small deadzone
+                turretPower = kP * offset;
                 if (Math.abs(offset) < 1.5) turretPower = 0.0;
             }
 
             robot.turret.setPower(turretPower);
             robot.turret.manualOverride = manualActive;
 
-            // ── Telemetry ─────────────────────────────────────────────────────
             telemetry.addData("kP", String.format("%.5f", kP));
             if (robot.limelight.hasTarget()) {
                 double tx = robot.limelight.getXDegrees(TAG_ID);
@@ -77,7 +72,7 @@ public class TurretKpTuningOpMode extends LinearOpMode {
             telemetry.addData("Distance", String.format("%.1f in", robot.limelight.distanceFromTag(TAG_ID)));
             telemetry.update();
 
-            sleep(25); // ~40Hz loop - good for tuning
+            sleep(25);
         }
 
         robot.turret.stop();

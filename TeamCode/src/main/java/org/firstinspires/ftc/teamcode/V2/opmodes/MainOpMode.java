@@ -34,7 +34,6 @@ public class MainOpMode extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            // Run teleop or auto logic based on prompts
             telemetry.update();
         }
     }
@@ -43,8 +42,10 @@ public class MainOpMode extends LinearOpMode {
         Alliance alliance = prompter.get("alliance");
         StartingLocation startPos = prompter.get("startpos");
 
-        // Schedule teleop with both gamepads
-        new RunTeleOp(alliance, hardwareMap, new GamepadEx(gamepad1), new GamepadEx(gamepad2)).schedule();
+        GamepadEx driver = new GamepadEx(gamepad1); // Fix: Explicit init
+        GamepadEx gunner = new GamepadEx(gamepad2);
+
+        new RunTeleOp(alliance, hardwareMap, driver, gunner).schedule();
 
         telemetry.addData("Selected Alliance", alliance);
         telemetry.addData("Selected Starting Position", startPos);
