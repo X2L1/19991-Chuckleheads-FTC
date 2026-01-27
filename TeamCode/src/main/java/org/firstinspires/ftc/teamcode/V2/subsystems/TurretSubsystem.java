@@ -10,13 +10,13 @@ public class TurretSubsystem extends SubsystemBase {
     public boolean manualOverride = false; // Flag for teleop manual control
 
     public TurretSubsystem(HardwareMap hardwareMap) {
-        leftServo = hardwareMap.get(CRServo.class, "leftTurretServo");
-        rightServo = hardwareMap.get(CRServo.class, "rightTurretServo");
+        leftServo = hardwareMap.get(CRServo.class, "leftTurret");
+        rightServo = hardwareMap.get(CRServo.class, "rightTurret");
     }
 
     public void setPower(double power) {
         leftServo.setPower(power);
-        rightServo.setPower(-power); // Adjust for gearing direction
+        rightServo.setPower(power); // Adjust for gearing direction
     }
 
     public void stop() {

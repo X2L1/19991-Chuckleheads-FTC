@@ -16,12 +16,12 @@ public class TeleOpTesting extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        robot = new Robot(hardwareMap);
+        robot = new Robot(hardwareMap, telemetry);
 
         GamepadEx driver = new GamepadEx(gamepad1); // Fix: Explicit init
         GamepadEx gunner = new GamepadEx(gamepad2);
 
-        runTeleOp = new RunTeleOp(Alliance.BLUE, hardwareMap, driver, gunner);
+        runTeleOp = new RunTeleOp(Alliance.BLUE, hardwareMap, telemetry, driver, gunner);
 
         telemetry.addData("Status", "Ready for TeleOp testing");
         telemetry.update();

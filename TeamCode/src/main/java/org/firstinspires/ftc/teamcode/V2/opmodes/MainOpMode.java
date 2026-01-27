@@ -21,7 +21,7 @@ public class MainOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        robot = new Robot(hardwareMap);
+        robot = new Robot(hardwareMap, telemetry);
 
         prompter.prompt("alliance", new OptionPrompt<>("Select Alliance", Alliance.RED, Alliance.BLUE))
                 .prompt("startpos", new OptionPrompt<>("Select Start Position", StartingLocation.CLOSE, StartingLocation.FAR))
@@ -45,7 +45,7 @@ public class MainOpMode extends LinearOpMode {
         GamepadEx driver = new GamepadEx(gamepad1); // Fix: Explicit init
         GamepadEx gunner = new GamepadEx(gamepad2);
 
-        new RunTeleOp(alliance, hardwareMap, driver, gunner).schedule();
+        new RunTeleOp(alliance, hardwareMap, telemetry, driver, gunner).schedule();
 
         telemetry.addData("Selected Alliance", alliance);
         telemetry.addData("Selected Starting Position", startPos);

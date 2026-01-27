@@ -21,7 +21,7 @@ public class TransferSubsystem extends SubsystemBase {
     public void run() {
        // blocker.setPosition(0); // Open blocker
         transferServo.setPower(1.0); // Spin intermediate servo at full power to prevent jams
-        transfer.setPower(1);
+        transfer.setPower(-1);
     }
 
     public void stop() {

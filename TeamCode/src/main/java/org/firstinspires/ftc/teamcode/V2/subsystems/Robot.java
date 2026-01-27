@@ -16,13 +16,14 @@ public class Robot {
     public RGBSubsystem rgb;
     public Telemetry telemetry;
 
-    public Robot(HardwareMap hMap) {
+    public Robot(HardwareMap hMap, Telemetry telemetry) {
+        this.telemetry = telemetry;
         drive = new DriveSubsystem(hMap);
         intake = new IntakeSubsystem(hMap);
         outtake = new OuttakeSubsystem(hMap);
         transfer = new TransferSubsystem(hMap);
         turret = new TurretSubsystem(hMap);
-        limelight = new LimelightSubsystem(hMap);
+        limelight = new LimelightSubsystem(hMap, telemetry);
         rgb = new RGBSubsystem(hMap);
     }
 }

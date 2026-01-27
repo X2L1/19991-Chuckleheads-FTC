@@ -17,7 +17,7 @@ public class OuttakeTuningOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        robot = new Robot(hardwareMap); // Pass HardwareMap
+        robot = new Robot(hardwareMap, telemetry); // Pass HardwareMap
 
         telemetry.addData("Status", "Ready for tuning. Use gamepad1 dpad: up/down for velocity, left/right for angle.");
         telemetry.update();

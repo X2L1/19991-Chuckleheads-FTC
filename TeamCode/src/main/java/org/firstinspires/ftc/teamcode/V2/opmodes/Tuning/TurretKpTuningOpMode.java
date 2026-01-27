@@ -21,7 +21,7 @@ public class TurretKpTuningOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        robot = new Robot(hardwareMap);
+        robot = new Robot(hardwareMap, telemetry);
         gunner = new GamepadEx(gamepad2); // Fix: Explicit init from gamepad2
 
         telemetry.addLine("=== Turret kP Tuning ===");

@@ -21,14 +21,19 @@ public class OuttakeSubsystem extends SubsystemBase {
         rightHood = hMap.get(Servo.class, "rightHood");
         leftHood = hMap.get(Servo.class, "leftHood");
         leftHood.setDirection(Servo.Direction.REVERSE);
-        outtakeLeft.setVelocityPIDFCoefficients(Configurables.outtakeP, Configurables.outtakeI, Configurables.outtakeD, Configurables.outtakeF);
-        outtakeRight.setVelocityPIDFCoefficients(Configurables.outtakeP, Configurables.outtakeI, Configurables.outtakeD, Configurables.outtakeF);
+        //outtakeLeft.setVelocityPIDFCoefficients(Configurables.outtakeP, Configurables.outtakeI, Configurables.outtakeD, Configurables.outtakeF);
+        //outtakeRight.setVelocityPIDFCoefficients(Configurables.outtakeP, Configurables.outtakeI, Configurables.outtakeD, Configurables.outtakeF);
     }
 
 
     public void runAtVelocity(double velocity) {
         outtakeLeft.setVelocity(velocity);
         outtakeRight.setVelocity(velocity);
+    }
+    public void runAtPower(double power)
+    {
+        outtakeLeft.setPower(power);
+        outtakeRight.setPower(power);
     }
     public void setHoodAngle(double angle)
     {

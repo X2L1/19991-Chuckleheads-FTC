@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.V2.subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.pedropathing.math.Vector;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
-import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 
@@ -19,8 +17,10 @@ import java.util.List;
 public class LimelightSubsystem extends SubsystemBase {
 
     private final Limelight3A limelight;
+    private final Telemetry telemetry;
 
-    public LimelightSubsystem(final HardwareMap hMap) {
+    public LimelightSubsystem(final HardwareMap hMap, Telemetry telemetry) {
+        this.telemetry = telemetry;
         limelight = hMap.get(Limelight3A.class, "limelight");
         telemetry.setMsTransmissionInterval(11);
         limelight.pipelineSwitch(0);

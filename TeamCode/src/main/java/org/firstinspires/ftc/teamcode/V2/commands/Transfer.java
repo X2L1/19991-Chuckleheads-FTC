@@ -30,11 +30,6 @@ public class Transfer extends CommandBase {
     }
 
     @Override
-    public boolean isFinished() {
-        return System.currentTimeMillis() - startTime > 500; // Timeout after 0.5s to prevent over-run
-    }
-
-    @Override
     public void end(boolean interrupted) {
         intake.stop();
         transfer.stop();

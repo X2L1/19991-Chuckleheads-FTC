@@ -17,7 +17,7 @@ public class SetOuttakeVelocity extends InstantCommand {
     // The subsystem the command runs on
     private final OuttakeSubsystem outtake;
     private final LimelightSubsystem limelight;
-    OuttakeLUTs luts;
+    OuttakeLUTs luts = new OuttakeLUTs();
     Alliance alliance = BLUE;
     public SetOuttakeVelocity(OuttakeSubsystem outtake, LimelightSubsystem limelight, Alliance alliance) {
         this.outtake = outtake;

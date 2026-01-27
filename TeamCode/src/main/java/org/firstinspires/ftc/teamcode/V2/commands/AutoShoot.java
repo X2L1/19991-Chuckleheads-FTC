@@ -3,37 +3,38 @@ package org.firstinspires.ftc.teamcode.V2.commands;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.V2.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.V2.utils.Alliance;
 import org.firstinspires.ftc.teamcode.V2.utils.ZoneUtils;
 
 public class AutoShoot extends ParallelCommandGroup {
 
-    private AimTurret aimTurret;
+    //private AimTurret aimTurret;
     private Transfer transfer;
     private SetOuttakeVelocity setOuttakeVelocity;
     private final Robot robot;
     private final ZoneUtils zoneUtils;
     private final Alliance alliance;
 
-    public AutoShoot(Alliance alliance, HardwareMap hMap) {
+    public AutoShoot(Alliance alliance, HardwareMap hMap, Telemetry telemetry) {
         this.alliance = alliance;
-        this.robot = new Robot(hMap); // Pass HardwareMap
+        this.robot = new Robot(hMap, telemetry); // Pass HardwareMap
         this.zoneUtils = new ZoneUtils(hMap); // Pass HardwareMap
         zoneUtils.initZone();
 
-        aimTurret = new AimTurret(robot.turret, robot.limelight, alliance);
+        //aimTurret = new AimTurret(robot.turret, robot.limelight, alliance);
         transfer = new Transfer(robot.intake, robot.transfer);
         setOuttakeVelocity = new SetOuttakeVelocity(robot.outtake, robot.limelight, alliance);
 
-        addCommands(aimTurret, setOuttakeVelocity, transfer);
-        addRequirements(robot.turret, robot.limelight, robot.outtake, robot.transfer, robot.intake);
+        addCommands(/*aimTurret,*/ setOuttakeVelocity, transfer);
+        addRequirements(/*robot.turret,*/ robot.limelight, robot.outtake, robot.transfer, robot.intake);
     }
 
     @Override
     public void execute() {
         zoneUtils.syncZonesWithPositions();
-        aimTurret.execute();
+        //aimTurret.execute();
         setOuttakeVelocity.execute();
         if (zoneUtils.isInsideLaunchZone() && robot.limelight.hasTarget() && !transfer.isScheduled()) {
             transfer.schedule();
