@@ -1,19 +1,21 @@
-package org.firstinspires.ftc.teamcode.V2.utils.Paths;
-
+package org.firstinspires.ftc.teamcode.V2.utils.StateMachines;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
-import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-public class FarZoneNine {
+import com.pedropathing.geometry.Pose;
+
+public class FarZonePartner {
     public PathChain IntakeHP;
     public PathChain ShootHP;
     public PathChain IntakeFar;
     public PathChain ShootFar;
+    public PathChain IntakePartner;
+    public PathChain ShootPartner;
     public PathChain Leave;
 
-    public FarZoneNine(Follower follower) {
+    public FarZonePartner(Follower follower) {
         IntakeHP = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(59.558, 8.474),
@@ -54,14 +56,34 @@ public class FarZoneNine {
 
                 .build();
 
+        IntakePartner = follower.pathBuilder().addPath(
+                        new BezierCurve(
+                                new Pose(58.862, 8.443),
+                                new Pose(15.587, 39.816),
+                                new Pose(10.135, 11.713)
+                        )
+                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(270))
+
+                .build();
+
+        ShootPartner = follower.pathBuilder().addPath(
+                        new BezierLine(
+                                new Pose(10.135, 11.713),
+
+                                new Pose(60.003, 8.115)
+                        )
+                ).setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(180))
+
+                .build();
         Leave = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(58.862, 8.443),
+                                new Pose(60.003, 8.115),
 
-                                new Pose(25.318, 10.527)
+                                new Pose(17.694, 8.893)
                         )
                 ).setTangentHeadingInterpolation()
 
                 .build();
     }
 }
+  

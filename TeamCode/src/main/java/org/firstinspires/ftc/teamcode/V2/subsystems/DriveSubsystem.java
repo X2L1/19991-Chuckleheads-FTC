@@ -16,14 +16,25 @@ public class DriveSubsystem extends SubsystemBase {
         backLeft = new MotorEx(hMap, "backLeft");
         backRight = new MotorEx(hMap, "backRight");
 
-        drive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
     }
 
     public void mecanumDrive(double forward, double strafe, double rotate) {
-        drive.driveRobotCentric(forward, strafe, rotate);
+        double denominator = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1);
+        double frontLeftPower = (forward + strafe + rotate) / denominator;
+        double backLeftPower = (forward - strafe + rotate) / denominator;
+        double frontRightPower = (forward - strafe - rotate) / denominator;
+        double backRightPower = (forward + strafe - rotate) / denominator;
+
+        frontLeft.set(frontLeftPower);
+        backLeft.set(backLeftPower);
+        frontRight.set(frontRightPower);
+        backRight.set(backRightPower);
     }
 
     public void stop() {
-        drive.stop();
+        frontLeft.stopMotor();
+        frontRight.stopMotor();
+        backLeft.stopMotor();
+        backRight.stopMotor();
     }
 }

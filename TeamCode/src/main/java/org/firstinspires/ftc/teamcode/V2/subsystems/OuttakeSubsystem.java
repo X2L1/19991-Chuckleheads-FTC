@@ -21,14 +21,19 @@ public class OuttakeSubsystem extends SubsystemBase {
         rightHood = hMap.get(Servo.class, "rightHood");
         leftHood = hMap.get(Servo.class, "leftHood");
         leftHood.setDirection(Servo.Direction.REVERSE);
-        //outtakeLeft.setVelocityPIDFCoefficients(Configurables.outtakeP, Configurables.outtakeI, Configurables.outtakeD, Configurables.outtakeF);
-        //outtakeRight.setVelocityPIDFCoefficients(Configurables.outtakeP, Configurables.outtakeI, Configurables.outtakeD, Configurables.outtakeF);
+        outtakeLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        outtakeRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 
     public void runAtVelocity(double velocity) {
-        outtakeLeft.setVelocity(velocity);
-        outtakeRight.setVelocity(velocity);
+        //feedforward = targetRPM / maxRPM;
+        //P controller = kP(target RPM - current RPM);
+        //kP is tuned
+        // feedforward + P controller
+        //Increase max if too low, decrease if too high
+        //Start P at 0.0000000001. Remove zeroes until something happens. Tune from there.
+        runAtPower((velocity/5800) + (Configurables.outtakeP * (velocity - outtakeLeft.getVelocity())));
     }
     public void runAtPower(double power)
     {

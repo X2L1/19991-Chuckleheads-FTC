@@ -1,6 +1,11 @@
 package org.firstinspires.ftc.teamcode.V2.commands;
 
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.A;
+import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.B;
+import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.DPAD_LEFT;
+import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.DPAD_RIGHT;
+import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.DPAD_UP;
+import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.X;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Trigger.LEFT_TRIGGER;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Trigger.RIGHT_TRIGGER;
 
@@ -16,7 +21,7 @@ import org.firstinspires.ftc.teamcode.V2.utils.Alliance;
 
 public class RunTeleOp extends ParallelCommandGroup {
 
-    //private AutoShoot autoShoot;
+    private AimTurret aimTurret;
     private Transfer transfer;
     private final Robot robot;
     private GamepadEx driverController;
@@ -30,7 +35,7 @@ public class RunTeleOp extends ParallelCommandGroup {
         this.robot = new Robot(hMap, telemetry);
         this.driverController = driverController;
         this.gunnerController = gunnerController;
-        //autoShoot = new AutoShoot(alliance, hMap, telemetry);
+        aimTurret = new AimTurret(robot.turret, robot.limelight, alliance);
 
         transfer = new Transfer(robot.intake, robot.transfer);
 
@@ -42,18 +47,28 @@ public class RunTeleOp extends ParallelCommandGroup {
         driverController.readButtons(); // Fix: Update gamepad state each loop
         gunnerController.readButtons(); // Fix: For reliable edge detection
 
-        double forward = -driverController.getRightX();
+        double forward = driverController.getLeftY();
         double strafe = driverController.getLeftX();
-        double rotate = driverController.getLeftY();
+        double rotate = driverController.getRightX();
         robot.drive.mecanumDrive(forward, strafe, rotate);
 
-        double manualPower = gunnerController.getLeftX();
-        if (manualPower > DEADZONE || manualPower < -DEADZONE) {
-            robot.turret.manualOverride = true;
-            robot.turret.setPower(manualPower);
-        } else {
+        if (gunnerController.getTrigger(RIGHT_TRIGGER) > 0.5) {
             robot.turret.manualOverride = false;
-            //autoShoot.execute();
+            aimTurret.execute(); // Auto-align with Limelight
+        } else {
+            robot.turret.manualOverride = true;
+            // Preset positions on gunner gamepad2
+            if (gunnerController.getButton(DPAD_UP)) {
+                robot.turret.setPosition(0.5);
+            } else if (gunnerController.getButton(DPAD_RIGHT)) {
+                robot.turret.setPosition(0.75);
+            } else if (gunnerController.getButton(DPAD_LEFT)) {
+                robot.turret.setPosition(0.25);
+            } else if (gunnerController.getButton(X)) {
+                robot.turret.setPosition(0.0);
+            } else if (gunnerController.getButton(B)) {
+                robot.turret.setPosition(1.0);
+            }
         }
 
         if (driverController.getTrigger(LEFT_TRIGGER) > 0.5) {
@@ -84,6 +99,7 @@ public class RunTeleOp extends ParallelCommandGroup {
         robot.telemetry.addData("Gunner LeftX", gunnerController.getLeftX());
         robot.telemetry.addData("Left Trigger", driverController.getTrigger(LEFT_TRIGGER));
         robot.telemetry.addData("A Button", driverController.getButton(A));
+        robot.telemetry.addData("Turret Pos", robot.turret.getPosition());
         robot.telemetry.update();
     }
 }

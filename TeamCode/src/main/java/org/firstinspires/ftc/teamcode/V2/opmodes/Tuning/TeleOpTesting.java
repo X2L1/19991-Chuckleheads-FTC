@@ -32,7 +32,6 @@ public class TeleOpTesting extends LinearOpMode {
             runTeleOp.execute();
             telemetry.update();
         }
-
         runTeleOp.end(false);
     }
 }

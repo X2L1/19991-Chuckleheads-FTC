@@ -11,7 +11,7 @@ public class OuttakeTuningOpMode extends LinearOpMode {
     private Robot robot;
     private double velocity = 0.0;
     private double angle = 0.5;
-    private double tagID = 20.0;
+    private int tagID = 20;
     private static final double VELOCITY_STEP = 100.0;
     private static final double ANGLE_STEP = 0.01;
 
