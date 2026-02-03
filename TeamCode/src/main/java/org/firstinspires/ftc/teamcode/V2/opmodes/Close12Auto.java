@@ -18,7 +18,7 @@ public class Close12Auto extends OpMode {
         machine.opmodeTimer.resetTimer();
         machine.follower = Constants.createFollower(hardwareMap);
         machine.buildPaths();
-        Pose startPose = new Pose(21.601, 123.058, Math.toRadians(143));
+        Pose startPose = new Pose(25.649, 130.603, Math.toRadians(145));
         machine.follower.setStartingPose(startPose);
     }
     /** This method is called continuously after Init while waiting for "play". **/
