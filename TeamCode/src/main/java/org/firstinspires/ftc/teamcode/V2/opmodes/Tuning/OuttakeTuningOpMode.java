@@ -12,7 +12,7 @@ public class OuttakeTuningOpMode extends LinearOpMode {
     private double velocity = 0.0;
     private double angle = 0.5;
     private int tagID = 20;
-    private static final double VELOCITY_STEP = 100.0;
+    private static final double VELOCITY_STEP = 25.0;
     private static final double ANGLE_STEP = 0.01;
 
     @Override
@@ -34,7 +34,7 @@ public class OuttakeTuningOpMode extends LinearOpMode {
             angle = Math.max(0.0, Math.min(1.0, angle));
 
             robot.outtake.setHoodAngle(angle);
-            robot.outtake.runAtVelocity(velocity);
+            robot.outtake.runAtVelocity(-velocity);
 
             telemetry.addData("Distance from AprilTag", robot.limelight.distanceFromTag(tagID));
             telemetry.addData("Hood Angle", angle);

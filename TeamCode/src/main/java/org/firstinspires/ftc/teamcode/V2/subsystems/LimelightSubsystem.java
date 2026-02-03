@@ -62,30 +62,6 @@ public class LimelightSubsystem extends SubsystemBase {
     }
 
     public double distanceFromTag(int tagID) { // Changed to int for consistency
-        LLResult result = getLatestResult();
-        if (result != null && result.isValid()) {
-            List<LLResultTypes.FiducialResult> detections = result.getFiducialResults();
-            for (LLResultTypes.FiducialResult detection : detections) {
-                if (detection.getFiducialId() == tagID) {
-                    Pose3D pose = detection.getCameraPoseTargetSpace();
-                    if (pose != null) {
-                        double xMeters = pose.getPosition().x;
-                        double zMeters = pose.getPosition().z;
-                        if (xMeters != 0 || zMeters != 0) { // Check non-zero
-                            double xInches = xMeters * 39.3701 + 8; // Meters to inches + offset
-                            double zInches = zMeters * 39.3701 + 8;
-                            return Math.sqrt(xInches * xInches + zInches * zInches); // Magnitude
-                        }
-                    }
-                    // Fallback to ty trig if 3D pose invalid
-                    double ty = detection.getTargetYDegrees();
-                    double angleToTag = CAMERA_PITCH_DEGREES + ty;
-                    if (angleToTag != 0) { // Avoid div zero
-                        return (TAG_HEIGHT_INCHES - CAMERA_HEIGHT_INCHES) / Math.tan(Math.toRadians(angleToTag));
-                    }
-                }
-            }
-        }
-        return 0.0; // No detection
+        return 0;
     }
 }

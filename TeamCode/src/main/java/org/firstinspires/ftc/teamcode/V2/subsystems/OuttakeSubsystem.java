@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.V2.utils.Configurables;
 
 public class OuttakeSubsystem extends SubsystemBase {
 
-    private final DcMotorEx outtakeLeft;
+    public final DcMotorEx outtakeLeft;
     private final DcMotorEx outtakeRight;
     private final Servo leftHood;
     private final Servo rightHood;
@@ -21,6 +21,7 @@ public class OuttakeSubsystem extends SubsystemBase {
         rightHood = hMap.get(Servo.class, "rightHood");
         leftHood = hMap.get(Servo.class, "leftHood");
         leftHood.setDirection(Servo.Direction.REVERSE);
+
         outtakeLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         outtakeRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }

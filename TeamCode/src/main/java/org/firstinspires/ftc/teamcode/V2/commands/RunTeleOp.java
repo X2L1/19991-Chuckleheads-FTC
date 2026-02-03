@@ -5,9 +5,12 @@ import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.B;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.DPAD_LEFT;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.DPAD_RIGHT;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.DPAD_UP;
+import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.LEFT_BUMPER;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.X;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Trigger.LEFT_TRIGGER;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Trigger.RIGHT_TRIGGER;
+
+import static org.firstinspires.ftc.teamcode.V2.subsystems.RGBSubsystem.colors.*;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -15,6 +18,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.V2.subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.V2.subsystems.RGBSubsystem;
+import org.firstinspires.ftc.teamcode.V2.subsystems.RGBSubsystem;
 import org.firstinspires.ftc.teamcode.V2.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.V2.subsystems.TransferSubsystem;
 import org.firstinspires.ftc.teamcode.V2.utils.Alliance;
@@ -52,44 +57,47 @@ public class RunTeleOp extends ParallelCommandGroup {
         double rotate = driverController.getRightX();
         robot.drive.mecanumDrive(forward, strafe, rotate);
 
-        if (gunnerController.getTrigger(RIGHT_TRIGGER) > 0.5) {
-            robot.turret.manualOverride = false;
-            aimTurret.execute(); // Auto-align with Limelight
-        } else {
+
             robot.turret.manualOverride = true;
             // Preset positions on gunner gamepad2
             if (gunnerController.getButton(DPAD_UP)) {
                 robot.turret.setPosition(0.5);
             } else if (gunnerController.getButton(DPAD_RIGHT)) {
-                robot.turret.setPosition(0.75);
+                robot.turret.setPosition(0.65);
             } else if (gunnerController.getButton(DPAD_LEFT)) {
-                robot.turret.setPosition(0.25);
+                robot.turret.setPosition(0.35);
             } else if (gunnerController.getButton(X)) {
-                robot.turret.setPosition(0.0);
+                robot.turret.setPosition(.12);
             } else if (gunnerController.getButton(B)) {
-                robot.turret.setPosition(1.0);
+                robot.turret.setPosition(.88);
             }
-        }
 
-        if (driverController.getTrigger(LEFT_TRIGGER) > 0.5) {
+        if (gunnerController.getTrigger(LEFT_TRIGGER) > 0.5) {
             robot.intake.run();
+            robot.transfer.runSlow();
         } else {
             robot.intake.stop();
+            robot.transfer.stop();
         }
-        if(driverController.getButton(A))
+        if(gunnerController.getButton(A))
         {
             transfer.execute();
         }
         else {
             transfer.end(true);
         }
-        if(driverController.getTrigger(RIGHT_TRIGGER)>.2)
+        if(gunnerController.getTrigger(RIGHT_TRIGGER)>.2)
         {
-            robot.outtake.runAtVelocity(-driverController.getTrigger(RIGHT_TRIGGER)*1800);
+            robot.outtake.runAtVelocity(-gunnerController.getTrigger(RIGHT_TRIGGER)*1800);
+        }
+        else if(gunnerController.getButton(LEFT_BUMPER))
+        {
+            robot.outtake.runAtPower(1);
         }
         else{
             robot.outtake.stop();
         }
+        robot.rgb.setToColor(GREEN);
 
 
 
@@ -100,6 +108,7 @@ public class RunTeleOp extends ParallelCommandGroup {
         robot.telemetry.addData("Left Trigger", driverController.getTrigger(LEFT_TRIGGER));
         robot.telemetry.addData("A Button", driverController.getButton(A));
         robot.telemetry.addData("Turret Pos", robot.turret.getPosition());
+        robot.telemetry.addData("Outtake Vel", robot.outtake.outtakeLeft.getVelocity());
         robot.telemetry.update();
     }
 }

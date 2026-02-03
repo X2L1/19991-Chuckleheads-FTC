@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-public class CloseZoneTwelve{
+public class CloseZone12Red{
     public Follower follower;
     public Timer pathTimer;
     private Timer actionTimer;
@@ -41,7 +41,7 @@ public class CloseZoneTwelve{
     public Robot robot;
     Transfer transfer;
 
-    public CloseZoneTwelve(HardwareMap hmap, Telemetry telemetry) {
+    public CloseZone12Red(HardwareMap hmap, Telemetry telemetry) {
         this.hmap = hmap;
         this.telemetry = telemetry;
         robot = new Robot(hmap, telemetry);
@@ -54,90 +54,90 @@ public class CloseZoneTwelve{
 
         InitialPushback = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(23.499, 124.956),
+                                new Pose(23.499, 124.956).mirror(),
 
-                                new Pose(32.040, 116.185)
+                                new Pose(32.040, 116.185).mirror()
                         )
                 )
-                .setLinearHeadingInterpolation(Math.toRadians(143 ), Math.toRadians(143))
+                .setLinearHeadingInterpolation(Math.toRadians(143 -90), Math.toRadians(143-90))
 
                 .build();
 
         Gotoclose = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(32.040, 116.185),
+                                new Pose(32.040, 116.185).mirror(),
 
-                                new Pose(48.913, 84.697)
+                                new Pose(48.913, 84.697).mirror()
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
+                ).setLinearHeadingInterpolation(Math.toRadians(143-90), Math.toRadians(180-180))
 
                 .build();
 
         Intakeclose = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(48.913, 84.697),
+                                new Pose(48.913, 84.697).mirror(),
 
-                                new Pose(15.015, 84.038)
+                                new Pose(15.015, 84.038).mirror()
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                ).setLinearHeadingInterpolation(Math.toRadians(180-180), Math.toRadians(180-180))
 
                 .build();
 
         shootclose = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(15.015, 84.038),
+                                new Pose(15.015, 84.038).mirror(),
 
-                                new Pose(32.030, 116.730)
+                                new Pose(32.030, 116.730).mirror()
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(143))
+                ).setLinearHeadingInterpolation(Math.toRadians(180-180), Math.toRadians(143-90))
 
                 .build();
 
         gotomiddle = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(32.030, 116.730),
+                                new Pose(32.030, 116.730).mirror(),
 
-                                new Pose(50.392, 59.366)
+                                new Pose(50.392, 59.366).mirror()
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(180))
+                ).setLinearHeadingInterpolation(Math.toRadians(143-90), Math.toRadians(180-180))
 
                 .build();
 
         intakemiddle = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(50.392, 59.366),
+                                new Pose(50.392, 59.366).mirror(),
 
-                                new Pose(15.903, 59.759)
+                                new Pose(15.903, 59.759).mirror()
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
+                ).setLinearHeadingInterpolation(Math.toRadians(180-180), Math.toRadians(180-180))
 
                 .build();
 
         avoidgate = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(15.903, 59.759),
+                                new Pose(15.903, 59.759).mirror(),
 
-                                new Pose(17.521, 69.888)
+                                new Pose(17.521, 69.888).mirror()
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(90))
+                ).setLinearHeadingInterpolation(Math.toRadians(180-180), Math.toRadians(90-180))
 
                 .build();
 
         shootmiddle = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(17.521, 69.888),
+                                new Pose(17.521, 69.888).mirror(),
 
-                                new Pose(32.226, 116.298)
+                                new Pose(32.226, 116.298).mirror()
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(90 ), Math.toRadians(143))
+                ).setLinearHeadingInterpolation(Math.toRadians(90-180 ), Math.toRadians(143-90))
 
                 .build();
 
         leave = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(32.226, 116.298),
+                                new Pose(32.226, 116.298).mirror(),
 
-                                new Pose(34.038, 75.211)
+                                new Pose(34.038, 75.211).mirror()
                         )
                 ).setTangentHeadingInterpolation()
 
@@ -153,7 +153,7 @@ public class CloseZoneTwelve{
                 setPathState(1);
                 break;
             case 1:
-                robot.outtake.runAtVelocity(0);
+                robot.outtake.runAtVelocity(-1800);
                 setPathState(2);
                 break;
             case 2:

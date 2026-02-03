@@ -7,12 +7,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class RGBSubsystem extends SubsystemBase {
 
-    private final Servo rgb;
+    public final Servo rgb;
 
     public RGBSubsystem(final HardwareMap hMap) {
         rgb = hMap.get(Servo.class, "RGB");
     }
-    private enum colors{
+    public enum colors{
         RED,
         ORANGE,
         YELLOW,
@@ -23,31 +23,31 @@ public class RGBSubsystem extends SubsystemBase {
         WHITE
     }
 
-    public void setToColor(Servo light, colors color) {
+    public void setToColor(colors color) {
         switch (color) {
             case RED:
-                light.setPosition(0.277);
+                rgb.setPosition(0.277);
                 break;
             case ORANGE:
-                light.setPosition(0.333);
+                rgb.setPosition(0.333);
                 break;
             case YELLOW:
-                light.setPosition(0.388);
+                rgb.setPosition(0.388);
                 break;
             case GREEN:
-                light.setPosition(0.480);
+                rgb.setPosition(0.480);
                 break;
             case BLUE:
-                light.setPosition(0.600);
+                rgb.setPosition(0.600);
                 break;
             case INDIGO:
-                light.setPosition(0.666);
+                rgb.setPosition(0.666);
                 break;
             case VIOLET:
-                light.setPosition(0.722);
+                rgb.setPosition(0.722);
                 break;
             case WHITE:
-                light.setPosition(1.0);
+                rgb.setPosition(1.0);
                 break;
         }
 

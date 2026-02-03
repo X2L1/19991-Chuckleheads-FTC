@@ -23,6 +23,11 @@ public class TransferSubsystem extends SubsystemBase {
         transferServo.setPower(1.0); // Spin intermediate servo at full power to prevent jams
         transfer.setPower(-1);
     }
+    public void runSlow()
+    {
+        transferServo.setPower(1.0); // Spin intermediate servo at full power to prevent jams
+        transfer.setPower(-.4);
+    }
 
     public void stop() {
         transfer.setPower(0);

@@ -25,10 +25,10 @@ public class DriveSubsystem extends SubsystemBase {
         double frontRightPower = (forward - strafe - rotate) / denominator;
         double backRightPower = (forward + strafe - rotate) / denominator;
 
-        frontLeft.set(frontLeftPower);
+        frontLeft.set(-frontLeftPower);
         backLeft.set(backLeftPower);
         frontRight.set(frontRightPower);
-        backRight.set(backRightPower);
+        backRight.set(-backRightPower);
     }
 
     public void stop() {
