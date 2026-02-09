@@ -23,16 +23,16 @@ public class closezone15test {
     public int pathState;
 
     public PathChain InitialPushback;
-    public PathChain Gotoclose;
-    public PathChain Intakeclose;
-    public PathChain shootclose;
-    public PathChain gotomiddle;
-    public PathChain intakemiddle;
-    public PathChain avoidgate;
-    public PathChain shootmiddle;
-    public PathChain leave;
+    public PathChain intakeclose;
+    public PathChain firstshot;
+    public PathChain middleintake;
+    public PathChain secondshot;
+    public PathChain gatedintake;
+    public PathChain thirdshot;
+    public PathChain farintake;
+    public PathChain fourthshot;
 
-    public PathChain Path10;
+    public PathChain GETOUTOFTHERE;
     HardwareMap hmap;
     Telemetry telemetry;
     public Robot robot;
@@ -59,7 +59,7 @@ public class closezone15test {
 
                 .build();
 
-        Gotoclose = follower.pathBuilder().addPath(
+        intakeclose = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(32.000, 111.329),
                                 new Pose(76.909, 83.511),
@@ -69,17 +69,17 @@ public class closezone15test {
 
                 .build();
 
-        Intakeclose = follower.pathBuilder().addPath(
+        firstshot = follower.pathBuilder().addPath(
                         new BezierLine(
                                 new Pose(24.317, 84.037),
 
                                 new Pose(32.000, 111.329)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(255), Math.toRadians(138))
+                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(138))
 
                 .build();
 
-        shootclose  = follower.pathBuilder().addPath(
+        middleintake = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(32.000, 111.329),
                                 new Pose(64.134, 104.595),
@@ -90,7 +90,7 @@ public class closezone15test {
 
                 .build();
 
-        gotomiddle  = follower.pathBuilder().addPath(
+        secondshot = follower.pathBuilder().addPath(
                         new BezierLine(
                                 new Pose(24.711, 59.111),
 
@@ -100,7 +100,7 @@ public class closezone15test {
 
                 .build();
 
-        intakemiddle= follower.pathBuilder().addPath(
+        gatedintake = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(32.000, 111.329),
                                 new Pose(36.214, 44.435),
@@ -110,7 +110,7 @@ public class closezone15test {
 
                 .build();
 
-        avoidgate = follower.pathBuilder().addPath(
+        thirdshot = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(3.234, 59.745),
                                 new Pose(36.460, 44.565),
@@ -120,7 +120,7 @@ public class closezone15test {
 
                 .build();
 
-        shootmiddle = follower.pathBuilder().addPath(
+        farintake = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(32.000, 111.329),
                                 new Pose(75.305, 24.148),
@@ -130,7 +130,7 @@ public class closezone15test {
 
                 .build();
 
-        leave = follower.pathBuilder().addPath(
+        fourthshot = follower.pathBuilder().addPath(
                         new BezierLine(
                                 new Pose(24.437, 36.191),
 
@@ -140,7 +140,7 @@ public class closezone15test {
 
                 .build();
 
-         Path10 = follower.pathBuilder().addPath(
+         GETOUTOFTHERE = follower.pathBuilder().addPath(
                     new BezierLine(
                             new Pose(32.000, 111.329),
 
@@ -195,7 +195,7 @@ public class closezone15test {
                 if(opmodeTimer.getElapsedTimeSeconds() > 6) {
                     /* Score Preload */
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
-                    follower.followPath(Gotoclose,true);
+                    follower.followPath(intakeclose,true);
                     setPathState(20);
                 }
                 break;
@@ -204,87 +204,143 @@ public class closezone15test {
                 if(!follower.isBusy()) {
                     /* Grab Sample */
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
-                    follower.followPath(Intakeclose,true);
+                    follower.followPath(firstshot,true);
+                    setPathState(21);
+                }
+                break;
+
+            case 21:
+                if(!follower.isBusy() && executeTimer.time() > 3) {
+
+                    transfer.execute();
+
+                    setPathState(22);
+                }
+                break;
+            case 22:
+                /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                if(opmodeTimer.getElapsedTimeSeconds() > 6) {
+                    /* Score Preload */
+                    /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
+                    transfer.end(true);
                     setPathState(30);
                 }
                 break;
+
             case 30:
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
                 if(!follower.isBusy()) {
                     /* Score Sample */
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
-                    follower.followPath(shootclose,true);
-                    setPathState(31);
-                }
-                break;
-            case 31:
-                if(!follower.isBusy()) {
-
-                    transfer.execute();
-
-                    executeTimer.startTime();
-                    setPathState(32);
-                }
-                break;
-            case 32:
-                /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
-                if(executeTimer.time() > 3) {
-                    /* Score Preload */
-                    /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
-                    transfer.end(true);
+                    follower.followPath(middleintake,true);
                     setPathState(40);
                 }
                 break;
+
             case 40:
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the pickup2Pose's position */
                 if(!follower.isBusy()) {
                     /* Grab Sample */
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
-                    follower.followPath(gotomiddle,true);
-                    setPathState(49);
+                    follower.followPath(secondshot,true);
+                    setPathState(41);
                 }
                 break;
-            case 49:
+
+            case 41:
+                if(!follower.isBusy() && executeTimer.time() > 3) {
+
+                    transfer.execute();
+
+                    setPathState(42);
+                }
+                break;
+            case 42:
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
-                if(!follower.isBusy()) {
-                    /* Score Sample */
+                if(opmodeTimer.getElapsedTimeSeconds() > 6) {
+                    /* Score Preload */
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
-                    follower.followPath(intakemiddle,true);
+                    transfer.end(true);
                     setPathState(50);
                 }
                 break;
+
             case 50:
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
                 if(!follower.isBusy()) {
                     /* Score Sample */
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
-                    follower.followPath(shootmiddle,true);
-                    setPathState(51);
+                    follower.followPath(gatedintake,true);
+                    setPathState(60);
                 }
                 break;
-            case 51:
+            case 60:
+                /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                if(!follower.isBusy()) {
+                    /* Score Sample */
+                    /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
+                    follower.followPath(thirdshot,true);
+                    setPathState(61);
+                }
+                break;
+            case 61:
                 if(!follower.isBusy()) {
 
                     transfer.execute();
                     executeTimer.startTime();
-                    setPathState(52);
+                    setPathState(62);
                 }
                 break;
-            case 52:
+            case 62:
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
                 if(executeTimer.time() > 3) {
                     /* Score Preload */
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
                     transfer.end(true);
+                    setPathState(70);
+                }
+                break;
+
+            case 70:
+                /* This case checks th robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                if(!follower.isBusy()) {
+                    /* Set the state to a Case we won't use or define, so it just stops running an new paths */
+                    follower.followPath(farintake);
                     setPathState(80);
                 }
                 break;
 
             case 80:
-                /* This case checks th robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
                 if(!follower.isBusy()) {
-                    /* Set the state to a Case we won't use or define, so it just stops running an new paths */
-                    follower.followPath(leave);
+
+                    follower.followPath(fourthshot);
+                    setPathState(81);
+                }
+                break;
+
+            case 81:
+                if(!follower.isBusy() && executeTimer.time() > 3) {
+
+                    transfer.execute();
+
+                    setPathState(82);
+                }
+                break;
+
+            case 82:
+                /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                if(opmodeTimer.getElapsedTimeSeconds() > 6) {
+                    /* Score Preload */
+                    /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
+                    transfer.end(true);
+                    setPathState(90);
+                }
+                break;
+
+            case 90:
+                if(!follower.isBusy()) {
+
+                    follower.followPath(GETOUTOFTHERE);
                     setPathState(-1);
                 }
                 break;
