@@ -11,9 +11,16 @@ import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Trigger.LEFT_TRIGGER;
 import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Trigger.RIGHT_TRIGGER;
 
 import static org.firstinspires.ftc.teamcode.V2.subsystems.RGBSubsystem.colors.*;
+import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.follower;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierCurve;
+import com.pedropathing.geometry.BezierLine;
+import com.pedropathing.geometry.Pose;
+import com.pedropathing.paths.PathChain;
+import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -34,6 +41,12 @@ public class RunTeleOp extends ParallelCommandGroup {
     private final Alliance alliance;
     private static final double DEADZONE = 0.1;
 
+    public PathChain ToPark;
+
+    public Timer pathTimer;
+
+    public int pathState;
+
 
     public RunTeleOp(Alliance alliance, HardwareMap hMap, Telemetry telemetry, GamepadEx driverController, GamepadEx gunnerController) {
         this.alliance = alliance;
@@ -45,6 +58,21 @@ public class RunTeleOp extends ParallelCommandGroup {
         transfer = new Transfer(robot.intake, robot.transfer);
 
         //addCommands(autoShoot);
+    }
+
+    public void buildPaths()
+    {
+
+        ToPark = follower.pathBuilder().addPath(
+                        new BezierLine(
+                                new Pose(25.649, 130.603),
+
+                                new Pose(32.000, 111.329)
+                        )
+                ).setLinearHeadingInterpolation(Math.toRadians(145), Math.toRadians(138))
+
+                .build();
+
     }
 
     @Override
@@ -99,6 +127,11 @@ public class RunTeleOp extends ParallelCommandGroup {
         }
         robot.rgb.setToColor(GREEN);
 
+        if(gunnerController.getButton(B))
+        {
+
+        }
+
 
 
         // Debug telemetry for gamepads
@@ -110,5 +143,10 @@ public class RunTeleOp extends ParallelCommandGroup {
         robot.telemetry.addData("Turret Pos", robot.turret.getPosition());
         robot.telemetry.addData("Outtake Vel", robot.outtake.outtakeLeft.getVelocity());
         robot.telemetry.update();
+    }
+
+    public void setPathState(int pState) {
+        pathState = pState;
+        pathTimer.resetTimer();
     }
 }
