@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.skeletonarmy.marrow.prompts.OptionPrompt;
 import com.skeletonarmy.marrow.prompts.Prompter;
 
-import org.firstinspires.ftc.teamcode.V2.commands.RunTeleOp;
+import org.firstinspires.ftc.teamcode.V2.commands.RunTeleOpBlue;
 import org.firstinspires.ftc.teamcode.V2.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.V2.utils.Alliance;
 
@@ -45,7 +45,7 @@ public class MainOpMode extends LinearOpMode {
         GamepadEx driver = new GamepadEx(gamepad1); // Fix: Explicit init
         GamepadEx gunner = new GamepadEx(gamepad2);
 
-        new RunTeleOp(alliance, hardwareMap, telemetry, driver, gunner).schedule();
+        new RunTeleOpBlue(alliance, hardwareMap, telemetry, driver, gunner).schedule();
 
         telemetry.addData("Selected Alliance", alliance);
         telemetry.addData("Selected Starting Position", startPos);
