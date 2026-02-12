@@ -15,8 +15,6 @@ import static org.firstinspires.ftc.teamcode.pedroPathing.Tuning.follower;
 
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
@@ -24,14 +22,10 @@ import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.V2.subsystems.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.V2.subsystems.RGBSubsystem;
-import org.firstinspires.ftc.teamcode.V2.subsystems.RGBSubsystem;
 import org.firstinspires.ftc.teamcode.V2.subsystems.Robot;
-import org.firstinspires.ftc.teamcode.V2.subsystems.TransferSubsystem;
 import org.firstinspires.ftc.teamcode.V2.utils.Alliance;
 
-public class RunTeleOp extends ParallelCommandGroup {
+public class RunTeleOpBlue extends ParallelCommandGroup {
 
     private AimTurret aimTurret;
     private Transfer transfer;
@@ -47,8 +41,10 @@ public class RunTeleOp extends ParallelCommandGroup {
 
     public int pathState;
 
+    public boolean blueteam;
 
-    public RunTeleOp(Alliance alliance, HardwareMap hMap, Telemetry telemetry, GamepadEx driverController, GamepadEx gunnerController) {
+
+    public RunTeleOpBlue(Alliance alliance, HardwareMap hMap, Telemetry telemetry, GamepadEx driverController, GamepadEx gunnerController) {
         this.alliance = alliance;
         this.robot = new Robot(hMap, telemetry);
         this.driverController = driverController;
@@ -60,23 +56,43 @@ public class RunTeleOp extends ParallelCommandGroup {
         //addCommands(autoShoot);
     }
 
-    public void ToPark() {
+    public void ToPark(boolean blueteam) {
         // 1. Get the current pose from the follower
+
         Pose currentPose = follower.getPose();
 
+
         // 2. Build a PathChain from currentPose to ParkPose
-        PathChain parkPath = follower.pathBuilder().addPath(
-                new BezierLine(
-                        currentPose,
+        if(blueteam){
+            PathChain parkPath = follower.pathBuilder().addPath(
+                            new BezierLine(
+                                    currentPose,
 
-                        new Pose (105.45230769230771, 33.23076923076923)
-                    )
-                ).setLinearHeadingInterpolation(currentPose.getHeading(), currentPose.getHeading())
+                                    new Pose(105.45230769230771, 33.23076923076923)
+                            )
+                    ).setLinearHeadingInterpolation(currentPose.getHeading(), currentPose.getHeading())
 
-                .build();
+                    .build();
 
-        // 3. Execute the path
-        follower.followPath(parkPath);
+            // 3. Execute the path
+            follower.followPath(parkPath);
+        }
+        else
+        {
+            PathChain parkPath = follower.pathBuilder().addPath(
+                            new BezierLine(
+                                    currentPose,
+
+                                    new Pose(38.5476923, 33.23076923076923)
+                            )
+                    ).setLinearHeadingInterpolation(currentPose.getHeading(), currentPose.getHeading())
+
+                    .build();
+
+            // 3. Execute the path
+            follower.followPath(parkPath);
+        }
+
     }
 
     @Override
@@ -133,7 +149,7 @@ public class RunTeleOp extends ParallelCommandGroup {
 
         if(gunnerController.getButton(B))
         {
-            ToPark();
+            ToPark(blueteam);
         }
 
 
