@@ -56,14 +56,13 @@ public class RunTeleOpBlue extends ParallelCommandGroup {
         //addCommands(autoShoot);
     }
 
-    public void ToPark(boolean blueteam) {
+    public void ToPark() {
         // 1. Get the current pose from the follower
 
         Pose currentPose = follower.getPose();
 
 
         // 2. Build a PathChain from currentPose to ParkPose
-        if(blueteam){
             PathChain parkPath = follower.pathBuilder().addPath(
                             new BezierLine(
                                     currentPose,
@@ -76,22 +75,6 @@ public class RunTeleOpBlue extends ParallelCommandGroup {
 
             // 3. Execute the path
             follower.followPath(parkPath);
-        }
-        else
-        {
-            PathChain parkPath = follower.pathBuilder().addPath(
-                            new BezierLine(
-                                    currentPose,
-
-                                    new Pose(38.5476923, 33.23076923076923)
-                            )
-                    ).setLinearHeadingInterpolation(currentPose.getHeading(), currentPose.getHeading())
-
-                    .build();
-
-            // 3. Execute the path
-            follower.followPath(parkPath);
-        }
 
     }
 
@@ -147,12 +130,10 @@ public class RunTeleOpBlue extends ParallelCommandGroup {
         }
         robot.rgb.setToColor(GREEN);
 
-        if(gunnerController.getButton(B))
+        if(driverController.getButton(B))
         {
-            ToPark(blueteam);
+            ToPark();
         }
-
-
 
         // Debug telemetry for gamepads
         robot.telemetry.addData("Driver LeftY", driverController.getLeftY());
