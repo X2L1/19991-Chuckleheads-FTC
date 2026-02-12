@@ -60,19 +60,23 @@ public class RunTeleOp extends ParallelCommandGroup {
         //addCommands(autoShoot);
     }
 
-    public void buildPaths()
-    {
+    public void ToPark() {
+        // 1. Get the current pose from the follower
+        Pose currentPose = follower.getPose();
 
-        ToPark = follower.pathBuilder().addPath(
-                        new BezierLine(
-                                new Pose(25.649, 130.603),
+        // 2. Build a PathChain from currentPose to ParkPose
+        PathChain parkPath = follower.pathBuilder().addPath(
+                new BezierLine(
+                        currentPose,
 
-                                new Pose(32.000, 111.329)
-                        )
-                ).setLinearHeadingInterpolation(Math.toRadians(145), Math.toRadians(138))
+                        new Pose (105.45230769230771, 33.23076923076923)
+                    )
+                ).setLinearHeadingInterpolation(currentPose.getHeading(), currentPose.getHeading())
 
                 .build();
 
+        // 3. Execute the path
+        follower.followPath(parkPath);
     }
 
     @Override
@@ -129,7 +133,7 @@ public class RunTeleOp extends ParallelCommandGroup {
 
         if(gunnerController.getButton(B))
         {
-
+            ToPark();
         }
 
 
