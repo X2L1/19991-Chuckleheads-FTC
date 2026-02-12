@@ -132,7 +132,7 @@ public class RunTeleOpRed extends ParallelCommandGroup {
 
         if(gunnerController.getButton(B))
         {
-            ToPark(blueteam);
+            ToPark();
         }
 
 
